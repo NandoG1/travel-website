@@ -1,8 +1,9 @@
+import React from 'react'
 
-export default function Hero(){
-    return(
-        <>
-
-        </>
-    )
+const Hero = () => {
+  return (
+    <div>hero</div>
+  )
 }
+
+export default Hero

@@ -1,9 +1,9 @@
+import React from 'react'
 
-
-export default function BestHotels(){
-    return(
-        <>
-            
-        </>
-    )
+const BestHotels = () => {
+  return (
+    <div>bestHotels</div>
+  )
 }
+
+export default BestHotels
