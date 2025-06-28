@@ -5,8 +5,8 @@ import {AiOutlineHome, AiOutlineUser} from "react-icons/ai"
 import { signOut } from 'next-auth/react'
 
 function Navbar() {
-    const [showModal, setShowModal] = useState(false);
-    const [isScrolled, setIsScrolled] = useState(false);
+    const [showModal, setShowModal] = useState<boolean>(false);
+    const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
     const toggleModal = () => setShowModal(prev => !prev);
 
