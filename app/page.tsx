@@ -5,9 +5,11 @@ import PopularLocations from "@/components/popular-locations/popularLocations";
 export default function Home() {
   return (
     <>
-      <Hero/>
+      <Hero image={sea} mainHeader="Are you ready for an adventure?" 
+      secondaryHeader="Browse though the popular locations"
+      />
       <PopularLocations/>
-      <Hero/>
+      <Hero image={}/>
       <BestHotels/>
     </>
   );
