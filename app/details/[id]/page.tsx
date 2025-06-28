@@ -10,6 +10,7 @@ import { FaBed, FaWifi } from 'react-icons/fa'
 import { CiLocationOn } from 'react-icons/ci'
 import { format } from 'currency-formatter'
 import Review from './review';
+import BookModals from '@/components/book-modal/bookModals';
 
 register()
 
@@ -27,6 +28,7 @@ function HotelsDetails({ctx}: any) {
   // })
   return (
     <div className={`min-h-screen w-full mt-24 ${showModal && "overflow-hidden"}`}>
+      {showModal && <BookModals handleHideModal={handleHideModal} />}
       <div className='h-full w-3/4 mx-auto'>
         <div>
           <div className='w-full h-[750px] overflow-hidden mx-auto'>
