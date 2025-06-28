@@ -17,9 +17,9 @@ interface BestHotelsCardProps{
 
 function Card({place}: BestHotelsCardProps) {
   return (
-    <Link href={"/details/1"} className='h-[500px] w-[350px] flex flex-warp rounded-xl cursor-pointer transition-all shadow-md hover:shadow-lg'>
+    <Link href={"/details/1"} className='h-[500px] w-[350px] flex flex-col rounded-xl cursor-pointer transition-all shadow-md hover:shadow-lg'>
         <div className='relative h-2/3 w-full '>
-            <Image src={place.image} className="h-full w-full overflow-hidden rounded-tl-xl rounded-tr-xl object-cover" alt=""/>
+            <Image src={place.image} alt="" fill className="h-full w-full overflow-hidden rounded-tl-xl rounded-tr-xl object-cover"/>
             <div className='absolute right-0 bottom-0 p-4 bg-blue-700 text-white rounded-tl-xl font-semibold'>
                 {place.location}
             </div>

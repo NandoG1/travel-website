@@ -1,11 +1,11 @@
 import React from 'react'
-import image_1 from '@public/hr_1.jpg'
-import image_2 from '@public/hr_2.jpg'
-import image_3 from '@public/hr_3.jpg'
-import image_4 from '@public/hr_4.jpg'
-import image_5 from '@public/hr_5.jpg'
-import image_6 from '@public/hr_6.jpg'
-import image_7 from '@public/hr_7.jpg'
+import image_1 from '@/public/hr_1.jpg'
+import image_2 from '@/public/hr_2.jpg'
+import image_3 from '@/public/hr_3.jpg'
+import image_4 from '@/public/hr_4.jpg'
+import image_5 from '@/public/hr_5.jpg'
+import image_6 from '@/public/hr_6.jpg'
+import image_7 from '@/public/hr_7.jpg'
 import Card from './card'
 
 interface HotelsProps{
@@ -86,7 +86,7 @@ const BestHotels = () => {
         <h2 className='text-4xl text-slate-800 font-bold mt-6 mb-12'>
           Best Hotels
         </h2>
-        <div className='flex flex-warp items-center gap-14'>
+        <div className='flex flex-wrap items-center gap-14'>
           {data?.map((place, idx) => (
             <Card key={idx} place={place}/>
           ))}
