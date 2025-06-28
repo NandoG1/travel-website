@@ -9,7 +9,7 @@ interface LayoutProviderProps {
   children: React.ReactNode;
 }
 
-const LayoutProvider: React.FC<LayoutProviderProps> = ({ children }) => {
+const LayoutProvider = ({ children }: LayoutProviderProps) => {
     const pathName = usePathname()
   return (
     <>
