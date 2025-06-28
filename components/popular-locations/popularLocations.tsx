@@ -45,8 +45,8 @@ const PopularLocations = () => {
         <h2 className='text-4xl text-slate-800 font-bold mt-6 mb-12'>
           Popular Locations
         </h2>
-        <div>
-          {data.map((place, idx) => (
+        <div className="flex flex-warp items-center gap-14">
+          {data?.map((place, idx) => (
             <Card key={idx} place={place}/>
           ))}
         </div>
