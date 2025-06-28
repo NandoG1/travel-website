@@ -18,7 +18,7 @@ function Navbar() {
     }, [])
 
   return (
-    <div className={`z-20 h-16 w-full top-0 left-0 ${isScrolled ? "shadow-md backdrop-blur" : ""}`}>
+    <div className={`fixed z-20 h-16 w-full top-0 left-0 ${isScrolled ? "shadow-md backdrop-blur" : ""}`}>
         <div className='h-full w-2/3 mx-auto flex items-center justify-between'>
             <Link href="/" className='flex items-center gap-2 transition-all'>
                 <h1 className={`${isScrolled ? "text-blue-600" : "text-[#cec7c7]"} text-2xl font-bold`}>

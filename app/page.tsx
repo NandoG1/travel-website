@@ -7,11 +7,11 @@ import hotel_image from "@/public/hr_10.jpg"
 export default function Home() {
   return (
     <>
-      <Hero image={sea} mainHeader="Are you ready for an adventure?" 
+      <Hero image={sea.src} mainHeader="Are you ready for an adventure?" 
       secondaryHeader="Browse though the popular locations."
       />
       <PopularLocations/>
-      <Hero image={hotel_image} mainHeader="Get the best offer for your hotel!"
+      <Hero image={hotel_image.src} mainHeader="Get the best offer for your hotel!"
       secondaryHeader="Pick your desired place."
       />
       <BestHotels/>
