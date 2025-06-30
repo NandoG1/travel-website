@@ -8,8 +8,8 @@ import { AiOutlineClose } from 'react-icons/ai'
 import {DateRangePicker} from "react-date-range"
 import { setDate } from "date-fns";
 
-function BookModals({handleHideModal}: () => void ) {
-    const [dateRange, setDateRange] = useState([new Date(), new Date(new Date().setDate(new Date().getDate + 7))]);
+function BookModals({handleHideModal} : any ) {
+    const [dateRange, setDateRange] = useState([new Date(), new Date(new Date().setDate(new Date().getDate() + 7))]);
     const selectionRange = {
         startDate: dateRange[0],
         endDate: dateRange[1],
@@ -48,7 +48,7 @@ function BookModals({handleHideModal}: () => void ) {
             <form action="" className="p-4 flex flex-col gap-4"> 
                 {/* disable date */}
                 <DateRangePicker ranges={[selectionRange]} minDate={new Date()} onChange={({selection}) => {
-                    setDateRange([selection.startDate, selection.endDate])
+                    setDateRange([selection.startDate || new Date(), selection.endDate || new Date()])
                 }}/>
             </form>
             <div className="p-4 mt-4 border-t border-slate-500 flex items-end justify-between">
