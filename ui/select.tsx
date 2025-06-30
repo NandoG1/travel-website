@@ -11,6 +11,7 @@ function Select({data, register, className}:any) {
               </option>
           ))}
         </select>
+        
     </div>
   )
 }

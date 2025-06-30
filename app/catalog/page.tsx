@@ -1,6 +1,9 @@
 import React from 'react'
 import Image from 'next/image'
 import image from "@/public/hr_1.jpg"
+import Select from '@/ui/select'
+import { optionLocations, optionTypes } from '@/data/data'
+import Input from '@/ui/input'
 
 function Catalog() {
   return (
@@ -17,8 +20,25 @@ function Catalog() {
             <h3 className='ml-1 text-[#efefef] font-semibold'>
               City
             </h3>
-            {/* <Sele */}
+            <Select data={optionLocations} className="text-blue-800 p-2 rounded-xl outline-none capitalize" />
           </div>
+          <div className='flex flex-col items-center gap-1'>
+            <h3 className='ml-1 text-[#efefef] font-semibold'>
+                Price
+            </h3>
+            <div className='flex items-center gap-2'>
+              <Input type="number" placeholder="Min. price" className="text-blue-800 p-2 rounded-xl outline-none" />
+              <Input type="number" placeholder="Max. price" className="text-blue-800 p-2 rounded-xl outline-none" />
+            </div>
+
+          </div>
+          <div className='flex flex-col items-start gap-1'>
+            <h3 className='ml-1 text-[#efefef] font-semibold'>
+              Type of hotel
+            </h3>
+            <Select data={optionTypes} className="text-blue-800 p-2 rounded-xl outline-none"/>
+          </div>
+          {/* <B */}
         </form>
       </div>
     </div>
