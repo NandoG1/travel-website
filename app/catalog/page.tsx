@@ -1,11 +1,87 @@
+"use client"
 import React from 'react'
 import Image from 'next/image'
 import image from "@/public/hr_1.jpg"
 import Select from '@/ui/select'
 import { optionLocations, optionTypes } from '@/data/data'
 import Input from '@/ui/input'
+import image_1 from '@/public/hr_1.jpg'
+import image_2 from '@/public/hr_2.jpg'
+import image_3 from '@/public/hr_3.jpg'
+import image_4 from '@/public/hr_4.jpg'
+import image_5 from '@/public/hr_5.jpg'
+import image_6 from '@/public/hr_6.jpg'
+import image_7 from '@/public/hr_7.jpg'
+import Card from "@/components/best-hotels/card"
+
+interface HotelsProps{  
+  name: string,
+  image: string,
+  price: number,
+  category: string,
+  reviews: number,
+  location: string
+}
 
 function Catalog() {
+  const data: HotelsProps[] = [
+    {
+      name: "Arabian Paradise",
+      image: image_1.src,
+      price: 324.50,
+      category: "Luxury",
+      reviews: 4.7,
+      location: "Dubai, UAE"
+    },
+    {
+      name: "Arabian Paradise",
+      image: image_2.src,
+      price: 324.50,
+      category: "Luxury",
+      reviews: 4.7,
+      location: "Dubai, UAE"
+    },
+    {
+      name: "Arabian Paradise",
+      image: image_3.src,
+      price: 324.50,
+      category: "Luxury",
+      reviews: 4.7,
+      location: "Dubai, UAE"
+    },
+    {
+      name: "Arabian Paradise",
+      image: image_4.src,
+      price: 324.50,
+      category: "Luxury",
+      reviews: 4.7,
+      location: "Dubai, UAE"
+    },
+    {
+      name: "Arabian Paradise",
+      image: image_5.src,
+      price: 324.50,
+      category: "Luxury",
+      reviews: 4.7,
+      location: "Dubai, UAE"
+    },
+    {
+      name: "Arabian Paradise",
+      image: image_6.src,
+      price: 324.50,
+      category: "Luxury",
+      reviews: 4.7,
+      location: "Dubai, UAE"
+    },
+    {
+      name: "Arabian Paradise",
+      image: image_7.src,
+      price: 324.50,
+      category: "Luxury",
+      reviews: 4.7,
+      location: "Dubai, UAE"
+    },
+  ]
   return (
     <div className='min-h-screen w-full'>
       <div className='relative h-3/5 w-full'>
@@ -40,6 +116,11 @@ function Catalog() {
           </div>
           {/* <B */}
         </form>
+        <div className='w-full mt-36 flex flex-warp justify-center items-center gap-14'>
+          {data?.map(({place, idx}:any) => (
+            <Card key={idx} place={place} />
+          ))}
+        </div>
       </div>
     </div>
   )

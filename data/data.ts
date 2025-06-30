@@ -1,28 +1,28 @@
-import Delhi from '../../public/assets/delhi.jpg'
-import Dubai from '../../public/assets/dubai.jpg'
-import Berlin from '../../public/assets/berlin.jpg'
-import Paris from '../../public/assets/paris.jpg'
-import AbuDhabi from '../../public/assets/AbuDhabi.jpg'
-import Mumbai from '../../public/assets/Mumbai.jpg'
-import Hamburg from '../../public/assets/Hamburg.jpg'
-import StTropez from '../../public/assets/StTropez.jpg'
+import Delhi from '@/public/delhi.jpg'
+import Dubai from '@/public/dubai.jpg'
+import Berlin from '@/public/berlin.jpg'
+import Paris from '@/public/paris.jpg'
+import AbuDhabi from '@/public/AbuDhabi.jpg'
+import Mumbai from "@/public/Mumbai.jpg"
+import Hamburg from '@/public/Hamburg.jpg'
+import StTropez from '@/public/StTropez.jpg'
 
 export const popularCities = [
     {
         city: "Delhi",
-        image: Delhi
+        image: Delhi.src
     },
     {
         city: "Dubai",
-        image: Dubai
+        image: Dubai.src
     },
     {
         city: "Berlin",
-        image: Berlin
+        image: Berlin.src
     },
     {
         city: "Paris",
-        image: Paris
+        image: Paris.src
     },
 ]
 
@@ -38,41 +38,41 @@ export const optionLocations = [
     {
         city: "Dubai",
         value: "dubai",
-        image: Dubai
+        image: Dubai.src
     },
     {
         city: "Abu Dhabi",
         value: "abu-dhabi",
-        image: AbuDhabi
+        image: AbuDhabi.src
     },
     {
         city: "Mumbai",
         value: "mumbai",
-        image: Mumbai
+        image: Mumbai.src
     },
     {
         city: "Delhi",
         value: "delhi",
-        image: Delhi
+        image: Delhi.src
     },
     {
         city: "Berlin",
         value: "berlin",
-        image: Berlin
+        image: Berlin.src
     },
     {
         city: "Hamburg",
         value: "hamburg",
-        image: Hamburg
+        image: Hamburg.src
     },
     {
         city: "St. Tropez",
         value: "st-tropez",
-        image: StTropez
+        image: StTropez.src
     },
     {
         city: "Paris",
         value: "paris",
-        image: Paris
+        image: Paris.src
     },
 ]

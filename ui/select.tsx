@@ -5,15 +5,21 @@ function Select({data, register, className}:any) {
   return (
     <div>
         <select name="" id="" className={className ? className : defaultClassName} {...register}>
-          {data?.map(({element} : any) => (
-              <option value={element.value} key={element.value}>
-                  {element.text ? element.text : element.city}
+          {data?.map((item : any, index: number) => {
+            const element = item.element || item;
+            const value = element?.value || element;
+            const displayText = element?.text || element?.city || element;
+            
+            return (
+              <option value={value} key={`${value}-${index}`}>
+                  {displayText}
               </option>
-          ))}
+            );
+          })}
         </select>
-        
+
     </div>
   )
 }
 
-export default Select
+export default Select
