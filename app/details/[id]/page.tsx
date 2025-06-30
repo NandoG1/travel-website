@@ -95,7 +95,7 @@ function HotelsDetails({ctx}: any) {
           </h1>
           <div className='mt-8 flex items-center gap-6'>
             {Array.from(Array(5).keys()).map((number) => (
-              <span key={number} onClick={() => setSelectedStar(number+1)} className={`${selectedStar === number + 1 ? "scale-125" : ""} cursor-pointer flex items-center gap-2 transition-all`}>
+              <span key={number} onClick={() => setSelectedStar(number+1)} className={`${selectedStar === number + 1 ? "transform scale-125" : ""} cursor-pointer flex items-center gap-2 transition-all`}>
                 {number+1}
                 <AiFillStar size={22} color='rgb(59,130,246)'/>
               </span>

@@ -13,7 +13,10 @@ interface BookModalsProps{
 }
 
 function BookModals({handleHideModal} : BookModalsProps ) {
-    const [dateRange, setDateRange] = useState([new Date(), new Date(new Date().setDate(new Date().getDate() + 7))]);
+    const [dateRange, setDateRange] = useState([
+        new Date(),
+        new Date(new Date().setDate(new Date().getDate() + 7))
+    ])
     const selectionRange = {
         startDate: dateRange[0],
         endDate: dateRange[1],
@@ -26,10 +29,10 @@ function BookModals({handleHideModal} : BookModalsProps ) {
        const endDate =  dateRange[1];
 
        if(startDate && endDate){
-        const result = Math.ceil((new Date()).getTime() - new Date(startDate).getTime() / (1000*60*60*24));
-        return result;
+        const result = Math.ceil(((new Date(endDate)).getTime() - new Date(startDate).getTime()) / (1000*60*60*24));
+        return result > 0 ? result : 1;
        }
-       return 0;
+       return 1;
     }
 
   return (
@@ -46,25 +49,25 @@ function BookModals({handleHideModal} : BookModalsProps ) {
                     Arabian Paradise
                 </h2>
                 <span className='text-slate-800'>
-                    {format(325.50, {locale: "en-US"})}
+                    {format(325.50, {locale: "id-ID"})}
                 </span>
             </div>
             <form action="" className="p-4 flex flex-col gap-4"> 
                 {/* disable date */}
-                <DateRangePicker ranges={[selectionRange]} minDate={new Date()} onChange={({selection}) => {
-                    setDateRange([selection.startDate || new Date(), selection.endDate || new Date()])
+                <DateRangePicker ranges={[selectionRange]} minDate={new Date()} onChange={({selection}: any) => {
+                    setDateRange([selection.startDate, selection.endDate])
                 }}/>
             </form>
             <div className="p-4 mt-4 border-t border-slate-500 flex items-end justify-between">
                 <div className="text-slate-700 flex items-center gap-2">
                     <span>
-                        {format(300, {locale: "en-US"})}
+                        {format(300, {locale: "id-ID"})}
                     </span>
                     <span>X</span>
                     <span>{calcDaysDiff()}</span>
                 </div>
                 <div className="text-slate-700 mt-4">
-                    Total Price: {format((300 * calcDaysDiff()), {locale: "en-US"})}
+                    Total Price: {format((300 * calcDaysDiff()), {locale: "id-ID"})}
                 </div>
             </div>
             <div className="w-full flex items-center mt-6">
