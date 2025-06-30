@@ -11,6 +11,10 @@ import { CiLocationOn } from 'react-icons/ci'
 import { format } from 'currency-formatter'
 import Review from './review';
 import BookModals from '@/components/book-modal/bookModals';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation'; 
 
 register()
 
@@ -18,7 +22,7 @@ function HotelsDetails({ctx}: any) {
   // const id = ctx.params.id
   const [selectedStar, setSelectedStar] = useState(5);
   const [showModal, setShowModal] = useState(false);
-  const swiperElRef = useRef(null);
+  const swiperElRef:any = useRef(null);
 
   const handleShowModal = () => setShowModal(prev => true);
   const handleHideModal = () => setShowModal(prev => false);
@@ -33,14 +37,21 @@ function HotelsDetails({ctx}: any) {
         <div>
           <div className='w-full h-[750px] overflow-hidden mx-auto'>
             <div className='w-full h-full'>
-              <swiper-container ref={swiperElRef} slides-per-view="1" navigation="true" >
-                <swiper-slide>
-                  <Image src={hotel_image_1} alt="" className='h-[750px] w-full object-cover'/>
-                </swiper-slide>
-                <swiper-slide>
-                  <Image src={hotel_image_2} alt="" className='h-[750px] w-full object-cover'/>
-                </swiper-slide>
-              </swiper-container>
+             <Swiper
+                modules={[Navigation]}
+                slidesPerView={1}
+                navigation
+                onSwiper={(swiper) => {
+                  swiperElRef.current = swiper;
+                }}
+              >
+                <SwiperSlide>
+                  <Image src={hotel_image_1} alt="" className='h-[750px] w-full object-cover' />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <Image src={hotel_image_2} alt="" className='h-[750px] w-full object-cover' />
+                </SwiperSlide>
+              </Swiper>
 
             </div>
           </div>
@@ -83,12 +94,12 @@ function HotelsDetails({ctx}: any) {
             Reviews
           </h1>
           <div className='mt-8 flex items-center gap-6'>
-            {Array.from(Array(5).keys()).map((number) => {
-              <span onClick={() => setSelectedStar(number+1)} className={`${selectedStar === number + 1 ? "scale-125" : ""} cursor-pointer flex items-center gap-2 transition-all`}>
+            {Array.from(Array(5).keys()).map((number) => (
+              <span key={number} onClick={() => setSelectedStar(number+1)} className={`${selectedStar === number + 1 ? "scale-125" : ""} cursor-pointer flex items-center gap-2 transition-all`}>
                 {number+1}
                 <AiFillStar size={22} color='rgb(59,130,246)'/>
               </span>
-            })}
+            ))}
           </div>
           <div className='mt-8 flex items-center gap-28 border rounded-lg py-4 px-6 w-max'>
             <input type="text" placeholder='Leave your opinion...' className='outline-none' />
