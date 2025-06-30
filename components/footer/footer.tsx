@@ -15,8 +15,8 @@ function Footer() {
             <div className="flex-1 flex flex-col gap-4">
                 <h2>Contacts</h2>
                 <span>Phone +123 456 789</span>
-                <span>YouTube: WebDevMania</span>
-                <span>GitHub: WebDevMania</span>
+                <span>YouTube: TraveL Ch</span>
+                <span>GitHub: NandoG1</span>
             </div>
             <div className="flex-1 flex flex-col gap-4">
                 <h2>Location</h2>
