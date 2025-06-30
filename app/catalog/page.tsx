@@ -17,7 +17,7 @@ function Catalog() {
             <h3 className='ml-1 text-[#efefef] font-semibold'>
               City
             </h3>
-            <Selec
+            {/* <Sele */}
           </div>
         </form>
       </div>

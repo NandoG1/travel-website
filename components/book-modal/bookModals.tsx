@@ -8,7 +8,11 @@ import { AiOutlineClose } from 'react-icons/ai'
 import {DateRangePicker} from "react-date-range"
 import { setDate } from "date-fns";
 
-function BookModals({handleHideModal} : any ) {
+interface BookModalsProps{
+    handleHideModal: () => void;
+}
+
+function BookModals({handleHideModal} : BookModalsProps ) {
     const [dateRange, setDateRange] = useState([new Date(), new Date(new Date().setDate(new Date().getDate() + 7))]);
     const selectionRange = {
         startDate: dateRange[0],
