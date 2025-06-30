@@ -49,7 +49,7 @@ function BookModals({handleHideModal} : BookModalsProps ) {
                     Arabian Paradise
                 </h2>
                 <span className='text-slate-800'>
-                    {format(325.50, {locale: "id-ID"})}
+                    {format(300, {locale: "id-ID"})}
                 </span>
             </div>
             <form action="" className="p-4 flex flex-col gap-4"> 
