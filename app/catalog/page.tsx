@@ -116,9 +116,9 @@ function Catalog() {
           </div>
           {/* <B */}
         </form>
-        <div className='w-full mt-36 flex flex-warp justify-center items-center gap-14'>
-          {data?.map(({place, idx}:any) => (
-            <Card key={idx} place={place} />
+        <div className='w-full mt-36 flex flex-wrap justify-center items-center gap-14'>
+          {data?.map((place, index) => (
+            <Card key={index} place={place} />
           ))}
         </div>
       </div>
