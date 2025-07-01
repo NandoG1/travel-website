@@ -11,7 +11,7 @@ function Select({data, register, className}:any) {
             const displayText = element?.text || element?.city || element;
             
             return (
-              <option value={value} key={`${value}-${index}`}>
+              <option className='text-black' value={value} key={`${value}-${index}`}>
                   {displayText}
               </option>
             );
