@@ -7,12 +7,14 @@ import { format } from "currency-formatter"
 import { AiOutlineClose } from 'react-icons/ai'
 import {DateRangePicker} from "react-date-range"
 import { setDate } from "date-fns";
+import { redirectToCheckout } from "./service";
 
 interface BookModalsProps{
     handleHideModal: () => void;
 }
 
-function BookModals({handleHideModal} : BookModalsProps ) {
+function BookModals({listing, handleHideModal} : any ) {
+    const [isLoading, setIsLoading] = useState(false);
     const [dateRange, setDateRange] = useState([
         new Date(),
         new Date(new Date().setDate(new Date().getDate() + 7))
@@ -35,7 +37,19 @@ function BookModals({handleHideModal} : BookModalsProps ) {
        return 1;
     }
 
-    
+     const handlePayment = async () => {
+        setIsLoading(true)
+        const startDate = dateRange[0]
+        const endDate = dateRange[1]
+
+        const daysDifference = calcDaysDiff()
+
+        await redirectToCheckout(listing, startDate, endDate, daysDifference)
+
+        setIsLoading(false)
+    }
+
+
 
   return (
     <div className='fixed z-30 backdrop-blur top-0 left-0 min-h-full w-full shadow-lg'>
@@ -73,7 +87,7 @@ function BookModals({handleHideModal} : BookModalsProps ) {
                 </div>
             </div>
             <div className="w-full flex items-center mt-6">
-                <button className="w-3/4 mx-auto cursor-pointer rounded-lg py-3 px-6 text-xl text-white bg-blue-500 transition-all hover:bg-blue-600">
+                <button onClick={handlePayment} disabled={isLoading} className="w-3/4 mx-auto cursor-pointer rounded-lg py-3 px-6 text-xl text-white bg-blue-500 transition-all hover:bg-blue-600">
                     Sumbit
                 </button>
 
