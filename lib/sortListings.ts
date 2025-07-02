@@ -5,7 +5,7 @@ export default function calcAndSortListings(listings:any){
         }
         const avgRating = listing.reviews.reduce((a:any,b:any) => {
             return a+b.stars
-        }, 0)
+        }, 0) / listing.reviews.length
 
         return {...listing, avgRating: Number(avgRating.toFixed(2))
         

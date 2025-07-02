@@ -15,6 +15,9 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation'; 
+import { useQuery } from '@tanstack/react-query';
+import { getListingById } from './service';
+import { ClipLoader } from 'react-spinners'
 
 register()
 
@@ -24,15 +27,38 @@ function HotelsDetails({ctx}: any) {
   const [showModal, setShowModal] = useState(false);
   const swiperElRef:any = useRef(null);
 
+  const { data: listing, isPending } = useQuery({
+    queryKey: ["listings", { id }],
+    queryFn: () => getListingById(id)
+  })
+
   const handleShowModal = () => setShowModal(prev => true);
   const handleHideModal = () => setShowModal(prev => false);
+
+  if(isPending){
+    const style = {
+      marginTop: "5rem",
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      height: "100vh"
+    }
+    return (
+      <div style={style}>
+        <ClipLoader
+          color={"#123abc"}
+        />
+      </div>
+    )
+  }
 
   // useEffect(() => {
 
   // })
   return (
     <div className={`min-h-screen w-full mt-24 ${showModal && "overflow-hidden"}`}>
-      {showModal && <BookModals handleHideModal={handleHideModal} />}
+      {showModal && <BookModals listing={listing} handleHideModal={handleHideModal} />}
       <div className='h-full w-3/4 mx-auto'>
         <div>
           <div className='w-full h-[750px] overflow-hidden mx-auto'>
@@ -45,41 +71,37 @@ function HotelsDetails({ctx}: any) {
                   swiperElRef.current = swiper;
                 }}
               >
-                <SwiperSlide>
-                  <Image src={hotel_image_1} alt="" className='h-[750px] w-full object-cover' />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <Image src={hotel_image_2} alt="" className='h-[750px] w-full object-cover' />
-                </SwiperSlide>
+                {listing?.imageUrls?.map((imageUrl:any) => {
+                  <SwiperSlide key={imageUrl}>
+                     <Image src={imageUrl} blurDataURL={listing.blurredImage} placeholder='blur' alt="" className='h-[750px] w-full object-cover rounded-lg' />
+                  </SwiperSlide>
+                })}
               </Swiper>
 
             </div>
           </div>
           <div className='mt-12 px-6 w-full flex items-center justify-between'>
             <h2 className='font-bold text-4xl'>
-              Arabian Paradise
+              {listing.name}
             </h2>
             <div>
               <span className='p-2 px-4 text-[22px] rounded-full bg-blue-600 text-white flex items-center gap-2'>
                 <AiFillStar color='white' />
                 <span className='text-white'>
-                  4.7
+                  {listing.avgRating}
                 </span>
               </span>
             </div>
           </div>
           <div className='mt-16 px-6 flex items-center gap-8'>
-             <span className='flex items-center gap-2'><CiLocationOn /> Dubai, UAE</span>
-              <span className='flex items-center gap-2'>{format(325.50, { locale: 'id-ID' })}/night</span>
-              <span className='flex items-center gap-2'>2 <FaBed /></span>
-              <span className='flex items-center gap-2'>Free <FaWifi /></span>
+             <span className='flex items-center gap-2'><CiLocationOn />{listing.location}</span>
+              <span className='flex items-center gap-2'>{format(listing.pricePerNight, { locale: 'id-ID' })}/night</span>
+              <span className='flex items-center gap-2'>{listing.beds} <FaBed /></span>
+              {listing.hasfreeWifi && <span className='flex items-center gap-2'>Free <FaWifi /></span>}
           </div>
           <div className='mt-16 px-6 w-full flex items-end justify-between'>
               <p className='text-xl max-w-xl text-slate-700'>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Dolores error, ipsam earum inventore illum veritatis nulla aperiam.
-                  Vitae excepturi alias earum esse incidunt, quibusdam cum,
-                  temporibus sint aliquam inventore voluptas?
+                 {listing.desc}
               </p>
               <button
                   onClick={handleShowModal}

@@ -18,11 +18,11 @@ export async function POST(req:any) {
         const stripe_obj = [
             {
                 price_data: {
-                    currency: "usd",
+                    currency: "idr",
                     product_data: {
                         name
                     },
-                    unit_amount: pricePerNight * 100
+                    unit_amount: pricePerNight
                 },
                 quantity: daysDifference
             }
@@ -48,7 +48,8 @@ export async function POST(req:any) {
         })
 
         return NextResponse.json({ sessionId: session.id })
-    } catch (error) {
+    } 
+    catch (error) {
         return NextResponse.json(error)
     }
 }
@@ -76,7 +77,8 @@ export async function DELETE(req:any) {
         }
 
         return NextResponse.json({message: "Successfully cancelled the reservation"})
-    } catch (error) {
+    } 
+    catch (error) {
         return NextResponse.json(error)
     }
 }
