@@ -4,6 +4,7 @@ import "./globals.css";
 import LayoutProvider from "@/components/layoutProvider/layoutProvider";
 import { QueryClient , QueryClientProvider} from "@tanstack/react-query";
 import Toast from "@/utils/toast";
+import Provider from "@/utils/sessionProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,10 +30,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Toast/>
-        <LayoutProvider>
-         {children}
-        </LayoutProvider>
+        <Provider>
+          <Toast/>
+          <LayoutProvider>
+            {children}
+          </LayoutProvider>
+        </Provider>
       </body>
     </html>
   );

@@ -28,7 +28,7 @@ export async function getCurrentUser(){
 
         const {password, ...currentUser} = user;
 
-        return NextResponse.json(currentUser)
+        return currentUser
     }
     catch(error){
         console.log(error);

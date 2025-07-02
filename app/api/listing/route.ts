@@ -1,23 +1,24 @@
 import { getCurrentUser } from "@/lib/currentUser";
 import { NextResponse } from "next/server";
 import db from "@/lib/db";
+import isAdminUser from "@/lib/isAdminUser";
 
 export async function POST(req:any){
     try{
-        const currentUser:any = await getCurrentUser();
 
-        if(!currentUser?.isAdmin){
-            return NextResponse.json("User must be an admin");
-        }
+        await isAdminUser()
+
+        
         const body = await req.json()
-
-        Object.values(body).forEach((v) => {
-            if(v==="") return NextResponse.json("Fill all fields!")
-        })
 
         const {
             name, location, desc, type, pricePerNight, beds, hasFreeWifi, imageUrls
         } = body
+
+        // Validate required fields
+        if (!name || !location || !desc || !type || !pricePerNight || !beds || !imageUrls?.length) {
+            return NextResponse.json({ error: "Fill all fields!" }, { status: 400 });
+        }
 
         const newListing = await db.listing.create({
             data: {
