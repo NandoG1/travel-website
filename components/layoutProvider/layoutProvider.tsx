@@ -4,6 +4,7 @@ import React from 'react';
 import { usePathname } from 'next/navigation';
 import Navbar from '../navbar/navbar';
 import Footer from '../footer/footer';
+import { QueryClient , QueryClientProvider} from "@tanstack/react-query";
 
 interface LayoutProviderProps {
   children: React.ReactNode;
@@ -11,11 +12,14 @@ interface LayoutProviderProps {
 
 const LayoutProvider = ({ children }: LayoutProviderProps) => {
     const pathName = usePathname()
+    const queryClient = new QueryClient();
   return (
     <>
-        {pathName !== "/login" && pathName !== "/signup" && <Navbar/>}
-        {children}
-        {pathName !== "/login" && pathName !== "/signup" && <Footer/>}
+        <QueryClientProvider client={queryClient}>
+          {pathName !== "/login" && pathName !== "/signup" && <Navbar/>}
+          {children}
+          {pathName !== "/login" && pathName !== "/signup" && <Footer/>}
+        </QueryClientProvider>
     </>
   )
 }

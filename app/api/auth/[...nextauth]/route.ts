@@ -35,7 +35,7 @@ export const authOptions = {
                 else{
                     const {password, ...currentUser} = user
 
-                    return currentUser  
+                    return currentUser
                 }
             }
         })

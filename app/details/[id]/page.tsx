@@ -70,7 +70,7 @@ function HotelsDetails({ctx}: any) {
           </div>
           <div className='mt-16 px-6 flex items-center gap-8'>
              <span className='flex items-center gap-2'><CiLocationOn /> Dubai, UAE</span>
-              <span className='flex items-center gap-2'>{format(325.50, { locale: 'en-us' })}/night</span>
+              <span className='flex items-center gap-2'>{format(325.50, { locale: 'id-ID' })}/night</span>
               <span className='flex items-center gap-2'>2 <FaBed /></span>
               <span className='flex items-center gap-2'>Free <FaWifi /></span>
           </div>
