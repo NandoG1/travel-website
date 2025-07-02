@@ -5,6 +5,11 @@ import Image from 'next/image'
 import { Button } from '@/ui/button'
 
 const Login = () => {
+
+  // const {
+  //   register, handleSumbit
+  // }
+
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
@@ -19,7 +24,7 @@ const Login = () => {
         />
         <div className='h-[350px] w-[350px] bg-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg'>
           <h2 className='text-center p-4 font-semibold text-slate-800 text-2xl border-b border-slate-500'>
-            Log into your account
+            Login into your account
           </h2>
           <form className='mt-8 flex flex-col w-full gap-8'>
             <input
