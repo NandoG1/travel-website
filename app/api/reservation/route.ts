@@ -1,13 +1,12 @@
 import db from "@/lib/db";
 import { getCurrentUser } from "@/lib/currentUser";
 import { NextResponse } from "next/server";
-import { getDatesInRange } from "@/lib/dateToMilliseconds"
+import { getDatesInRange} from "@/lib/dateToMilliseconds"
 import isAdminUser from "@/lib/isAdminUser";
 
 export async function GET(req:any) {
     try {
-        await isAdminUser();
-        const currentUser = await getCurrentUser()
+        const currentUser:any = await getCurrentUser() || "";
 
         if (currentUser.isAdmin) {
             const allReservations = await db.reservation.findMany({
@@ -38,8 +37,7 @@ export async function GET(req:any) {
 export async function POST(req:any) {
     try {
 
-
-        const currentUser = await getCurrentUser()
+        const currentUser:any = await getCurrentUser()  || "";
         const body = await req.json()
 
         const {
@@ -49,31 +47,31 @@ export async function POST(req:any) {
             daysDifference
         } = body
 
-        const listing = await db.listing.findUnique({
+        const listing:any = await db.listing.findUnique({
             where: {
                 id: listingId
             },
             include: {
                 reservations: true
             }
-        })
+        }) || "";
 
-        const allBookedDates = listing.reservations.flatMap((reservation) => {
+        const allBookedDates = listing.reservations.flatMap((reservation:any) => {
             const reservedDates = reservation.reservedDates
 
             return reservedDates
         })
 
         const getDates = getDatesInRange(startDate, endDate)
-        const isUnavailable = allBookedDates.some((date) => getDates.includes(date))
+        const isUnavailable = allBookedDates.some((date:any) => getDates.includes(date))
 
         if(isUnavailable){
-            return NextResponse.error({
+            return NextResponse.json({
                 message: "You are trying to reserve a booked date!"
             })
         }
 
-        const newReservation = await db.reservation.create({
+        const newReservation: = await db.reservation.create({
             data: {
                 startDate,
                 endDate,
