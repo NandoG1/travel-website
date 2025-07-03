@@ -70,7 +70,7 @@ function BookModals({listing, handleHideModal} : any ) {
             </div>
             <form action="" className="p-4 flex flex-col gap-4"> 
                 {/* disable date */}
-                <DateRangePicker ranges={[selectionRange]} minDate={new Date()} onChange={({selection}: any) => {
+                <DateRangePicker ranges={[selectionRange]} minDate={new Date()} disabledDates={listing?.reservations?.flatmap(({reservedDated}:any) => reservedDated)} onChange={({selection}: any) => {
                     setDateRange([selection.startDate, selection.endDate])
                 }}/>
             </form>
