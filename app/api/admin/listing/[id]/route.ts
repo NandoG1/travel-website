@@ -2,7 +2,7 @@ import db from "@/lib/db";
 import isAdminUser from "@/lib/isAdminUser";
 import { NextResponse } from "next/server";
 
-export async function GET(req, ctx) {
+export async function GET(req:any, ctx:any) {
     try {
         await isAdminUser()
 
@@ -14,11 +14,11 @@ export async function GET(req, ctx) {
 
         return NextResponse.json(listing)
     } catch (error) {
-        return NextResponse.error(error)
+        return NextResponse.json(error)
     }
 }
 
-export async function PUT(req, ctx) {
+export async function PUT(req:any, ctx:any) {
     try {
         await isAdminUser()
 
@@ -32,11 +32,11 @@ export async function PUT(req, ctx) {
 
         return NextResponse.json(updatedListing)
     } catch (error) {
-        return NextResponse.error(error)
+        return NextResponse.json(error)
     }
 }
 
-export async function DELETE(req, ctx) {
+export async function DELETE(req:any, ctx:any) {
     try {
         await isAdminUser()
         const { id } = ctx.params
@@ -48,9 +48,9 @@ export async function DELETE(req, ctx) {
         if (deletedListing) {
             return NextResponse.json({ message: "Listing has been deleted successfully" }, { status: 200 })
         } else {
-            return NextResponse.error({ message: `Listing with the id of ${id} doesnt exist!` })
+            return NextResponse.json({ message: `Listing with the id of ${id} doesnt exist!` })
         }
     } catch (error) {
-        return NextResponse.error(error)
+        return NextResponse.json(error)
     }
 }

@@ -2,7 +2,7 @@ import db from "@/lib/db";
 import isAdminUser from "@/lib/isAdminUser";
 import { NextResponse } from "next/server";
 
-export async function GET(req, ctx) {
+export async function GET(req:any, ctx:any) {
     try {
         await isAdminUser()
 
@@ -14,11 +14,11 @@ export async function GET(req, ctx) {
 
         return NextResponse.json(user)
     } catch (error) {
-        return NextResponse.error(error)
+        return NextResponse.json(error)
     }
 }
 
-export async function PUT(req, ctx) {
+export async function PUT(req:any, ctx:any) {
     try {
         await isAdminUser()
         const { id } = ctx.params
@@ -33,11 +33,11 @@ export async function PUT(req, ctx) {
 
         return NextResponse.json(updatedUser)
     } catch (error) {
-        return NextResponse.error(error)
+        return NextResponse.json(error)
     }
 }
 
-export async function DELETE(req, ctx) {
+export async function DELETE(req:any, ctx:any) {
     try {
         await isAdminUser()
         const { id } = ctx.params
@@ -54,6 +54,6 @@ export async function DELETE(req, ctx) {
         }
     } 
     catch (error) {
-        return NextResponse.error(error)
+        return NextResponse.json(error)
     }
 }

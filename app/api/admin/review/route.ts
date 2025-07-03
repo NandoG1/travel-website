@@ -2,7 +2,7 @@ import db from "@/lib/db";
 import isAdminUser from "@/lib/isAdminUser";
 import { NextResponse } from "next/server";
 
-export async function GET(req) {
+export async function GET(req:any) {
     try {
         await isAdminUser()
 
@@ -10,6 +10,6 @@ export async function GET(req) {
 
         return NextResponse.json(reviews)
     } catch (error) {
-        return NextResponse.error(error)
+        return NextResponse.json(error)
     }
 }
