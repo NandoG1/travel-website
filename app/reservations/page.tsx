@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import listing_image from "@/public/hr_1.jpg"
 import Card from './card'
