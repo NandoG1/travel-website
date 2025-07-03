@@ -71,14 +71,15 @@ export async function POST(req:any) {
             })
         }
 
-        const newReservation: = await db.reservation.create({
+        const newReservation = await db.reservation.create({
             data: {
                 startDate,
                 endDate,
                 listingId,
                 daysDifference,
                 reservedDates: getDates,
-                userId: currentUser.id
+                userId: currentUser.id,
+                chargeId: ""
             }
         })
 
