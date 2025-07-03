@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import image_1 from '@/public/hr_1.jpg'
 import image_2 from '@/public/hr_2.jpg'
@@ -7,6 +8,9 @@ import image_5 from '@/public/hr_5.jpg'
 import image_6 from '@/public/hr_6.jpg'
 import image_7 from '@/public/hr_7.jpg'
 import Card from './card'
+import { useQuery } from '@tanstack/react-query'
+import { getBestHotels } from './service'
+import { ClipLoader } from 'react-spinners'
 
 interface HotelsProps{
   name: string,
@@ -18,64 +22,87 @@ interface HotelsProps{
 }
 
 const BestHotels = () => {
-   const data: HotelsProps[] = [
-    {
-      name: "Arabian Paradise",
-      image: image_1.src,
-      price: 324.50,
-      category: "Luxury",
-      reviews: 4.7,
-      location: "Dubai, UAE"
-    },
-    {
-      name: "Arabian Paradise",
-      image: image_2.src,
-      price: 324.50,
-      category: "Luxury",
-      reviews: 4.7,
-      location: "Dubai, UAE"
-    },
-    {
-      name: "Arabian Paradise",
-      image: image_3.src,
-      price: 324.50,
-      category: "Luxury",
-      reviews: 4.7,
-      location: "Dubai, UAE"
-    },
-    {
-      name: "Arabian Paradise",
-      image: image_4.src,
-      price: 324.50,
-      category: "Luxury",
-      reviews: 4.7,
-      location: "Dubai, UAE"
-    },
-    {
-      name: "Arabian Paradise",
-      image: image_5.src,
-      price: 324.50,
-      category: "Luxury",
-      reviews: 4.7,
-      location: "Dubai, UAE"
-    },
-    {
-      name: "Arabian Paradise",
-      image: image_6.src,
-      price: 324.50,
-      category: "Luxury",
-      reviews: 4.7,
-      location: "Dubai, UAE"
-    },
-    {
-      name: "Arabian Paradise",
-      image: image_7.src,
-      price: 324.50,
-      category: "Luxury",
-      reviews: 4.7,
-      location: "Dubai, UAE"
-    },
-  ]
+   const { data, isLoading } = useQuery({
+    queryKey: ["listings"],
+    queryFn: getBestHotels
+  })
+
+  if(isLoading){
+    const style = {
+      marginTop: "5rem",
+      position: "absolute" as const,
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      height: "100vh"
+    }
+    return (
+      <div style={style}>
+        <ClipLoader
+          color={"#123abc"}
+        />
+      </div>
+    )
+  }
+
+  // const data: HotelsProps[] = [
+  //   {
+  //     name: "Arabian Paradise",
+  //     image: image_1.src,
+  //     price: 324.50,
+  //     category: "Luxury",
+  //     reviews: 4.7,
+  //     location: "Dubai, UAE"
+  //   },
+  //   {
+  //     name: "Arabian Paradise",
+  //     image: image_2.src,
+  //     price: 324.50,
+  //     category: "Luxury",
+  //     reviews: 4.7,
+  //     location: "Dubai, UAE"
+  //   },
+  //   {
+  //     name: "Arabian Paradise",
+  //     image: image_3.src,
+  //     price: 324.50,
+  //     category: "Luxury",
+  //     reviews: 4.7,
+  //     location: "Dubai, UAE"
+  //   },
+  //   {
+  //     name: "Arabian Paradise",
+  //     image: image_4.src,
+  //     price: 324.50,
+  //     category: "Luxury",
+  //     reviews: 4.7,
+  //     location: "Dubai, UAE"
+  //   },
+  //   {
+  //     name: "Arabian Paradise",
+  //     image: image_5.src,
+  //     price: 324.50,
+  //     category: "Luxury",
+  //     reviews: 4.7,
+  //     location: "Dubai, UAE"
+  //   },
+  //   {
+  //     name: "Arabian Paradise",
+  //     image: image_6.src,
+  //     price: 324.50,
+  //     category: "Luxury",
+  //     reviews: 4.7,
+  //     location: "Dubai, UAE"
+  //   },
+  //   {
+  //     name: "Arabian Paradise",
+  //     image: image_7.src,
+  //     price: 324.50,
+  //     category: "Luxury",
+  //     reviews: 4.7,
+  //     location: "Dubai, UAE"
+  //   },
+  // ]
 
   return (
     <div className='h-full w-full my-36'>
@@ -87,8 +114,8 @@ const BestHotels = () => {
           Best Hotels
         </h2>
         <div className='flex flex-wrap items-center gap-14'>
-          {data?.map((place, idx) => (
-            <Card key={idx} place={place}/>
+          {data?.map((place) => (
+            <Card key={place.id} place={place}/>
           ))}
         </div>
       </div>

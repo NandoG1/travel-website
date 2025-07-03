@@ -9,7 +9,7 @@ const schema = z.object({
     hasFreeWifi: z.boolean().optional(),
     type: z.string(),
     location: z.string(),
-    pricePerNight: z.number().min(50000, {message: "Price must be above 50000"}).max(10000000, {message: "Price must be lower 10000000"})
+    pricePerNight: z.number().min(10000, {message: "Price must be above 50000"}).max(10000000, {message: "Price must be lower 10000000"})
 })  
 
 export{

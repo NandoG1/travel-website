@@ -12,6 +12,8 @@ export async function GET(req:any){
         })
 
         const sortedListings = calcAndSortListings(listings).slice(0,4)
+
+        return NextResponse.json(sortedListings)
     }
     catch(error){
         return NextResponse.json(error);

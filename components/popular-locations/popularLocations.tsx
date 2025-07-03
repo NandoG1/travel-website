@@ -1,9 +1,14 @@
+"use client"
 import Delhi from "@/public/delhi.jpg"
 import Berlin from "@/public/berlin.jpg"
 import Paris from "@/public/paris.jpg"
 import Dubai from "@/public/dubai.jpg"
 import React from 'react'
 import Card from "./card"
+import { useQuery } from "@tanstack/react-query"
+import { getPopularPlaces } from "./service"
+import { ClipLoader } from "react-spinners"
+
 
 interface DataProps{
   image: string,
@@ -12,29 +17,51 @@ interface DataProps{
 }
 
 const PopularLocations = () => {
+   const { data, isLoading } = useQuery({
+    queryFn: getPopularPlaces,
+    queryKey: ["popular-listings"]
+  })
 
-  const data: DataProps[] = [
-    {
-      image: Delhi.src,
-      city: "Delhi",
-      numOfPlace: 73,
-    },
-     {
-      image: Berlin.src,
-      city: "Berlin",
-      numOfPlace: 34,
-    },
-     {
-      image: Paris.src,
-      city: "Paris",
-      numOfPlace: 73,
-    },
-     {
-      image: Dubai.src,
-      city: "Dubai",
-      numOfPlace: 27,
+  if(isLoading){
+    const style = {
+      marginTop: "5rem",
+      position: "absolute" as const,
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      height: "100vh"
     }
-  ]
+    return (
+      <div style={style}>
+        <ClipLoader
+          color={"#123abc"}
+        />
+      </div>
+    )
+  }
+
+  // const data: DataProps[] = [
+  //   {
+  //     image: Delhi.src,
+  //     city: "Delhi",
+  //     numOfPlace: 73,
+  //   },
+  //    {
+  //     image: Berlin.src,
+  //     city: "Berlin",
+  //     numOfPlace: 34,
+  //   },
+  //    {
+  //     image: Paris.src,
+  //     city: "Paris",
+  //     numOfPlace: 73,
+  //   },
+  //    {
+  //     image: Dubai.src,
+  //     city: "Dubai",
+  //     numOfPlace: 27,
+  //   }
+  // ]
 
   return (
     <div className='h-full w-full my-36'>
@@ -46,7 +73,7 @@ const PopularLocations = () => {
           Popular Locations
         </h2>
         <div className="flex flex-warp items-center gap-14">
-          {data?.map((place, idx) => (
+          {data?.map((place:any, idx:any) => (
             <Card key={idx} place={place}/>
           ))}
         </div>

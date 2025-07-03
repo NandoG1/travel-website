@@ -15,11 +15,11 @@ interface BestHotelsCardProps{
     }
 }
 
-function Card({place}: BestHotelsCardProps) {
+function Card({place}: any) {
   return (
-    <Link href={"/details/1"} className='h-[500px] w-[350px] flex flex-col rounded-xl cursor-pointer transition-all shadow-md hover:shadow-lg'>
+    <Link href={`/details/${place.id}`} className='h-[500px] w-[350px] flex flex-col rounded-xl cursor-pointer transition-all shadow-md hover:shadow-lg'>
         <div className='relative h-2/3 w-full '>
-            <Image src={place?.image} alt="" fill className="h-full w-full overflow-hidden rounded-tl-xl rounded-tr-xl object-cover"/>
+            <Image src={place?.imageUrls[0]} width={250} height={250} alt="" className="h-full w-full overflow-hidden rounded-tl-xl rounded-tr-xl object-cover"/>
             <div className='absolute right-0 bottom-0 p-4 bg-blue-700 text-white rounded-tl-xl font-semibold'>
                 {place?.location}
             </div>
@@ -31,12 +31,12 @@ function Card({place}: BestHotelsCardProps) {
                 </h2>
                 <span className="p-2 rounded-full bg-blue-600 text-white flex items-center gap-2">
                     <AiFillStar color='white'/>
-                    <span className='text-white'>{place?.reviews}</span>
+                    <span className='text-white'>{place?.avgRating}</span>
                 </span>
             </div>
             <div className='mt-6 flex justify-between items-center'>
                 <span className='text-slate-600'>
-                    {format(place?.price, {locale: "id-ID"})}
+                    {format(place?.pricePerNight, {locale: "id-ID"})}
                 </span>
                 <span className='ml-2'>
                     per night

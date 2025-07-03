@@ -19,32 +19,37 @@ interface CardProps{
   hotel: ReservationsProps
 }
 
-function Card({hotel} : CardProps) {
+function Card({reservation, mutate} : any) {
   return (
     <div className='w-[300px] min-h flex flex-col '>
-        <Link href={`/details/${hotel.listingId}`}>
-          <Image src={hotel.image} alt='' className='rounded-xl shadow-xl' width={300} height={300} />
+        <Link href={`/details/${reservation.listingId}`}>
+          <Image src={reservation.listing.imageUrls[0]} alt='' className='rounded-xl shadow-xl' width={300} height={300} />
         </Link>
         <div className='p-2 mt-2 flex flex-col gap-4'>
           <span className='font-semibold text-lg'>
-            {hotel.location}
+            {reservation.listing.location}
           </span>
           <span>
-            {hotel.name}
+            {reservation.listing.name}
           </span>
           <div>
             <span className='text-slate-500'>
-              {format(hotel.startDate, "MMM do yyyy")}
+              {format(reservation.startDate, "MMM do yyyy")}
             </span>
             <span className='px-2'>-</span>
             <span className='text-slate-500'>
-              {format(hotel.endDate, "MMM do yyyy")}
+              {format(reservation.endDate, "MMM do yyyy")}
             </span>
           </div>
           <div>
-            Total Price: ${hotel.daysDifference * hotel.pricePerNight}
+            Total Price: ${reservation.daysDifference * reservation.listing.pricePerNight}
           </div>
-          <button className='w-48 py-2 bg-red-500 text-white rounded-xl transition-all hover:bg-red-400'>Cancel</button>
+          <button onClick={() => {
+            mutate({
+                chargeId: reservation.chargeId,
+                reservationId: reservation.id
+            })
+          }} className='w-48 py-2 bg-red-500 text-white rounded-xl transition-all hover:bg-red-400'>Cancel</button>
         </div> 
 
 
