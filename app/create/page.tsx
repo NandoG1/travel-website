@@ -12,8 +12,8 @@ import {useMutation} from "@tanstack/react-query";
 import { useRouter } from 'next/navigation'
 
 function Create() {
-    const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUD_NAME || "";
-    const UPLOAD_PRESET = process.env.NEXT_PUBLIC_UPLOAD_PRESET || "";
+    const CLOUD_NAME = process.env.CLOUD_NAME || "";
+    const UPLOAD_PRESET = process.env.UPLOAD_PRESET || "";
     const router = useRouter();
     const [images, setImages] = useState<File[]>([])
 
@@ -64,44 +64,21 @@ function Create() {
             return imageUrl
         }
         catch(error){
-            console.log('Upload error:', error);
-            toast.error(`Failed to upload image ${idx+1}`);
-            toast.dismiss(toastId);
-            throw error; // Re-throw to handle in onSubmit
+            console.log(error);
         }
     }
 
     const onSumbit = async(data:any) => {
-        try {
-            if(!images?.length) return toast.error("You must publish your images!");
+        if(!images?.length) return toast.error("You must publish your images!");
 
-            const imageUrls = await Promise.all(images.map((image, idx) => {
-                const imageUrl = uploadImage(image, idx)
-                return imageUrl 
-            }))
+        const imageUrls = await Promise.all(images.map((image, idx) => {
+            const imageUrl = uploadImage(image, idx)
+            return imageUrl 
+        }))
 
-            console.log('Image URLs:', imageUrls);
-            
-            if (imageUrls.some(url => !url)) {
-                return toast.error("Some images failed to upload. Please try again.");
-            }
-            
-            console.log('Form data:', data);
-
-            const newListing:any = await mutateAsync({data, imageUrls});
-            console.log('New listing response:', newListing);
-            
-            if (newListing && newListing.id) {
-                toast.success("Redirecting to listing...");
-                router.push(`/details/${newListing.id}`)
-            } else {
-                toast.error("Failed to create listing. Please try again.");
-                console.error('No listing ID returned:', newListing);
-            }
-        } catch (error) {
-            console.error('Submit error:', error);
-            toast.error("An error occurred while creating the listing. Please try again.");
-        }
+        const newListing:any = await mutateAsync({data, imageUrls});
+        toast.success("Redirecting to listing...");
+        router.push(`/details/${newListing.id}`)
     }
 
     const handleImage = (e:any) => {

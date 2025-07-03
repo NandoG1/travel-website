@@ -3,13 +3,13 @@
 import Image from 'next/image';
 import hotel_image_1 from "@/public/hr_1.jpg"
 import hotel_image_2 from "@/public/hr_2.jpg"
-import React, { useEffect, useRef, useState, use } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { register } from 'swiper/element/bundle';
 import { AiFillStar } from 'react-icons/ai';
 import { FaBed, FaWifi } from 'react-icons/fa'
 import { CiLocationOn } from 'react-icons/ci'
 import { format } from 'currency-formatter'
-import Reviews from './reviews';
+import Review from './review';
 import BookModals from '@/components/book-modal/bookModals';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
@@ -21,8 +21,8 @@ import { ClipLoader } from 'react-spinners'
 
 register()
 
-function HotelsDetails({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = use(params);
+async function HotelsDetails(ctx: any) {
+  const id = await ctx.params.id
   const [selectedStar, setSelectedStar] = useState(5);
   const [showModal, setShowModal] = useState(false);
   const swiperElRef:any = useRef(null);
@@ -71,11 +71,11 @@ function HotelsDetails({ params }: { params: Promise<{ id: string }> }) {
                   swiperElRef.current = swiper;
                 }}
               >
-                {listing.imageUrls.map((imageUrl:any, index: number) => (
-                  <SwiperSlide key={`${imageUrl}-${index}`}>
-                     <Image src={imageUrl} height={100} width={100} blurDataURL={listing.blurredImage} placeholder='blur' alt="" className='h-[750px] w-full object-cover rounded-lg' />
+                {listing?.imageUrls?.map((imageUrl:any) => {
+                  <SwiperSlide key={imageUrl}>
+                     <Image src={imageUrl} blurDataURL={listing.blurredImage} placeholder='blur' alt="" className='h-[750px] w-full object-cover rounded-lg' />
                   </SwiperSlide>
-                ))}
+                })}
               </Swiper>
 
             </div>
@@ -97,7 +97,7 @@ function HotelsDetails({ params }: { params: Promise<{ id: string }> }) {
              <span className='flex items-center gap-2'><CiLocationOn />{listing.location}</span>
               <span className='flex items-center gap-2'>{format(listing.pricePerNight, { locale: 'id-ID' })}/night</span>
               <span className='flex items-center gap-2'>{listing.beds} <FaBed /></span>
-              {listing.hasFreeWifi && <span className='flex items-center gap-2'>Free <FaWifi /></span>}
+              {listing.hasfreeWifi && <span className='flex items-center gap-2'>Free <FaWifi /></span>}
           </div>
           <div className='mt-16 px-6 w-full flex items-end justify-between'>
               <p className='text-xl max-w-xl text-slate-700'>
@@ -112,7 +112,7 @@ function HotelsDetails({ params }: { params: Promise<{ id: string }> }) {
           </div>
         </div>
         <div className='border-t-2 border-white-800 px-6 mt-16 mx-auto'>
-          {/* <h1 className='mt-16 text-3xl font-bold'>
+          <h1 className='mt-16 text-3xl font-bold'>
             Reviews
           </h1>
           <div className='mt-8 flex items-center gap-6'>
@@ -128,10 +128,10 @@ function HotelsDetails({ params }: { params: Promise<{ id: string }> }) {
             <button className='cursor-pointer rounded-lg py-2 px-6 text-xl text-white bg-blue-500 hover:bg-blue-400 transition-all'>
               Post
             </button>
-          </div> */}
+          </div>
           <div className='border-t-2 border-white px-6 mt-16 mx-auto'>
               <h1 className='mt-16 text-3xl font-bold'>Reviews</h1>
-              <Reviews id={id}/>
+              <Review id={id} />
           </div>
         </div>
       </div>

@@ -19,14 +19,14 @@ const Reviews = ({
 
     const { data: reviews, isPending: isPendingQuery } = useQuery({
         queryFn: () => getReviewsByListing(id),
-        queryKey: ["reviews", id]
+        queryKey: ["reviews"]
     })
 
     const { mutate, isPending } = useMutation({
         mutationFn:  handleSubmit,
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["reviews", id] })
-            queryClient.invalidateQueries({ queryKey: ["listings", { id }] })
+            queryClient.invalidateQueries({ queryKey: ["reviews"] })
+            queryClient.invalidateQueries({ queryKey: ["listings"] })
         }
     })
 
@@ -59,7 +59,6 @@ const Reviews = ({
             <div className="mt-8 flex items-center gap-6">
                 {Array.from(Array(5).keys()).map((number) => (
                     <span
-                        key={number}
                         onClick={() => setSelectedStar(number + 1)}
                         className={`${selectedStar === number + 1 ? "scale-125" : ""}
                     cursor-pointer flex items-center gap-2 transition-all`}
@@ -88,7 +87,7 @@ const Reviews = ({
                     Post
                 </button>
             </div>
-            <div className="mt-16 flex flex-col gap-24 w-1/3">
+            <div className="mt-16 h-[900px] flex flex-col gap-24 w-1/3">
                 {currentReviews?.map((review:any) => (
                     <Review
                         key={review.id}

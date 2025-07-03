@@ -4,8 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(req:any, ctx:any){
     try{    
-        const params = await ctx.params;
-        const {id} = params;
+        const {id} = ctx.params
 
         const listing:any = await db.listing.findUnique({
             where: {id},
