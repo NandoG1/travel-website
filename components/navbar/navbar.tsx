@@ -2,11 +2,13 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link';
 import {AiOutlineHome, AiOutlineUser} from "react-icons/ai"    
-import { signOut } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 
 function Navbar() {
     const [showModal, setShowModal] = useState<boolean>(false);
     const [isScrolled, setIsScrolled] = useState<boolean>(false);
+
+    const {data:session}:any = useSession()
 
     const toggleModal = () => setShowModal(prev => !prev);
 
@@ -31,14 +33,17 @@ function Navbar() {
                     <AiOutlineUser size={30} color={`${isScrolled ? "rgb(37 99 235)" : "#cec7c7"}`}/>
                 </div>
                 {showModal && (
-                    <div onClick={toggleModal} className='absolute top-16 right-[270px] shadow-md flex flex-col gap-4 p-4 bg-white rounded-xl'>
-                        <Link href="/reservations">
-                            Reservations
-                        </Link>
-                        <button onClick={() => signOut()} className='text-slate-500 text-center'>
-                            Logout
-                        </button>
-                    </div>
+                    <>
+                        <div onClick={toggleModal} className='absolute top-16 right-[270px] shadow-md flex flex-col items-center gap-4 p-4 bg-white rounded-xl'>
+                            {session?.user?.isAdmin && <Link className='bg-red-500 text-white px-1 py-2 rounded-xl' href="/admin/dashboard">Admin</Link>}
+                            <Link href="/reservations">
+                                Reservations
+                            </Link>
+                            <button onClick={() => signOut()} className='text-slate-500 text-center'>
+                                Logout
+                            </button>
+                        </div>
+                    </>
                 )}
             </div>
         </div>
