@@ -24,7 +24,7 @@ export async function getAllUsers() {
     return data
 }
 
-export async function deleteReview(id) {
+export async function deleteReview(id:any) {
     const { data } = await AXIOS_API.delete(`/admin/review/${id}`)
 
     return data

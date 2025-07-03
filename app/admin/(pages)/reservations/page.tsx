@@ -1,11 +1,11 @@
 "use client"
 import React from 'react'
-import AdminLayout from '../../layout/AdminLayout'
+import AdminLayout from '../../layouts/adminLayout'
 import { useQuery } from '@tanstack/react-query'
 import { getAllReservations } from '../../services/service'
 import { ClipLoader } from 'react-spinners'
-import { DataTable } from '../../components/Data-table'
-import { columns } from './table/Columns'
+import { DataTable } from '../../components/data-table'
+import { columns } from './table/column'
 
 const Reservations = () => {
   const { data: allReservations, isPending } = useQuery({

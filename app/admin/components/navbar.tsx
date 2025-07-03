@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { IoCreateOutline } from "react-icons/io5"
 import { AiOutlineHome } from 'react-icons/ai'
 import { FaUser } from 'react-icons/fa'
-import CreateModal from '../modals/create-modal/CreateModal'
+import CreateModal from '../modals/create-modal/createModal'
 
 const Navbar = () => {
     const [showModal, setShowModal] = useState(false)

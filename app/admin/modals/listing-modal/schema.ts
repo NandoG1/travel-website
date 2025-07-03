@@ -6,8 +6,8 @@ const schema = z.object({
     desc: z.string().min(1, { message: "Description is required!" }),
     beds: z.number().min(1, { message: "Beds are required!" }),
     hasFreeWifi: z.boolean().optional(),
-    type: z.enum(optionTypes.map(({value}) => value)),
-    location: z.enum(optionLocations.map(({value}) => value)),
+    type: z.enum(optionTypes.map(({value}) => value) as [string, ...string[]]),
+    location: z.enum(optionLocations.map(({value}) => value) as [string, ...string[]]),
     pricePerNight: z.number().min(15, {message: "Price must be above $15"}).max(50000, {message: "Price can't exceed $50k!"})
 })
 

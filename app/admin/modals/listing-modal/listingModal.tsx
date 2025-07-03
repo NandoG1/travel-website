@@ -1,13 +1,13 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import ModalLayout from '../../layout/ModalLayout'
-import Input from '@/ui/Input'
-import Select from '@/ui/Select'
+import ModalLayout from '../../layouts/modalLayout'
+import Input from '@/ui/input'
+import Select from '@/ui/select'
 import { optionLocations, optionTypes } from '@/data/data'
-import Button from '@/ui/Button'
+// import Button from '@/ui/Button'
 import { useRouter } from 'next/navigation'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { getListingById } from '@/app/(pages)/details/[id]/service'
+import { getListingById } from '@/app/details/[id]/service'
 import { updateListing } from '../../(pages)/listings/service'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { schema } from './schema'
@@ -18,11 +18,11 @@ import { postImages } from './service'
 const ListingModal = ({
     handleHideModal,
     listingId
-}) => {
-    const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUD_NAME
-    const UPLOAD_PRESET = process.env.NEXT_PUBLIC_UPLOAD_PRESET
+}:any) => {
+    const CLOUD_NAME = process.env.CLOUD_NAME || ""
+    const UPLOAD_PRESET = process.env.UPLOAD_PRESET || ""
 
-    const [images, setImages] = useState([])
+    const [images, setImages] = useState<File[]>([])
     const router = useRouter()
 
     const { data: listing } = useQuery({
@@ -31,7 +31,7 @@ const ListingModal = ({
     })
 
     const { mutateAsync, isPending: isPendingMutation } = useMutation({
-        mutationFn: ({ listingId, body }) => updateListing({ listingId, body }),
+        mutationFn: ({ listingId, body }:any) => updateListing({ listingId, body }),
     })
 
     console.log(listing)
@@ -48,7 +48,10 @@ const ListingModal = ({
     useEffect(() => {
         if (Object.keys(errors)?.length > 0) {
             Object.keys(errors)?.map((key) => {
-                toast.error(errors[key]?.message)
+                const fieldError = errors[key as keyof typeof errors]
+                if (fieldError?.message) {
+                    toast.error(fieldError.message)
+                }
             })
         }
     }, [errors])
@@ -65,13 +68,13 @@ const ListingModal = ({
         listing?.pricePerNight
     ])
 
-    const handleImage = (e) => {
+    const handleImage = (e:any) => {
         setImages(prev => {
             return [...prev, e.target.files[0]]
         })
     }
 
-    const uploadImage = async (image, idx) => {
+    const uploadImage = async (image:any, idx:any) => {
         if (!image) return
 
         const toastId = toast.loading(`Image ${idx + 1} is being uploaded`)
@@ -91,7 +94,7 @@ const ListingModal = ({
         }
     }
 
-    const onSubmit = async (data) => {
+    const onSubmit = async (data:any) => {
         const imageUrls = await Promise.all(images.map((image, idx) => {
             const imageUrl = uploadImage(image, idx)
             return imageUrl
@@ -167,10 +170,11 @@ const ListingModal = ({
                     style={{ display: "none" }}
                     id="images"
                 />
-                <Button
+                <button
                     disabled={isPendingMutation}
-                    label="Submit"
-                />
+                >
+                    Submit
+                    </button>
             </form>
         </ModalLayout>
     )

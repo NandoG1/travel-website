@@ -5,13 +5,13 @@ import { FaPen, FaTrash } from "react-icons/fa"
 import { AiOutlineArrowDown, AiOutlineArrowUp } from "react-icons/ai"
 import { useState } from "react"
 import { useListingHook } from "@/app/admin/hooks/listing-hook"
-import ListingModal from "@/app/admin/modals/listing-modal/ListingModal"
+import ListingModal from "@/app/admin/modals/listing-modal/listingModal"
 
 export const columns = [
     {
         accessorKey: "image",
         header: "Image",
-        cell: ({ row }) => {
+        cell: ({ row }:any) => {
             const image = row.original?.imageUrls[0]
 
             return (
@@ -30,7 +30,7 @@ export const columns = [
     {
         accessorKey: "location",
         header: "Location",
-        cell: ({ row }) => {
+        cell: ({ row }:any) => {
             const location = row.getValue("location")
 
             return (
@@ -42,7 +42,7 @@ export const columns = [
     },
     {
         accessorKey: "pricePerNight",
-        header: ({ column }) => {
+        header: ({ column }:any) => {
             return (
                 <button
                     className="flex items-center gap-1"
@@ -56,7 +56,7 @@ export const columns = [
                 </button>
             )
         },
-        cell: ({ row }) => {
+        cell: ({ row }:any) => {
             const pricePerNight = row.getValue("pricePerNight")
 
             return (
@@ -73,7 +73,7 @@ export const columns = [
     {
         accessorKey: "actions",
         header: "Actions",
-        cell: ({ row }) => {
+        cell: ({ row }:any) => {
             const listingId = row.original.id
             const [showModal, setShowModal] = useState(false)
 

@@ -1,5 +1,5 @@
 import { useQueries } from "@tanstack/react-query";
-import { getMostReservedListings } from "../modals/create-modal/service"
+import { getMostReservedListings } from "../modals/create-modal/service";
 import {
     getAllListings,
     getAllReservations,

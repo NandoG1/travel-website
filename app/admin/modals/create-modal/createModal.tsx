@@ -1,28 +1,28 @@
 "use client"
 import { useForm } from "react-hook-form"
-import Input from '@/ui/Input'
+import Input from '@/ui/input'
 import React, { useEffect, useState } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { schema } from "./schema"
-import Select from "@/ui/Select"
+import Select from "@/ui/select"
 import { optionLocations, optionTypes } from "@/data/data"
-import Button from "@/ui/Button"
+// import Button from "@/ui/Button"
 import { toast } from "react-hot-toast"
-import { createNewListing, postImages } from "./service"
+import { createNewlisting, postImages } from "./service"
 import { useMutation } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
-import ModalLayout from "../../layout/ModalLayout"
+import ModalLayout from "../../layouts/modalLayout"
 
 const CreateModal = ({
   handleHideModal
 }:any) => {
-  const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUD_NAME
-  const UPLOAD_PRESET = process.env.NEXT_PUBLIC_UPLOAD_PRESET
+  const CLOUD_NAME = process.env.CLOUD_NAME || "";
+  const UPLOAD_PRESET = process.env.UPLOAD_PRESET || "";
   const router = useRouter()
   const [images, setImages] = useState([])
 
-  const { mutateAsync, isLoading } = useMutation({
-    mutationFn: ({ data, imageUrls }) => createNewListing(data, imageUrls),
+  const { mutateAsync, isLoading }:any = useMutation({
+    mutationFn: ({ data, imageUrls }:any) => createNewlisting(data, imageUrls),
     mutationKey: ["listings"]
   })
 
@@ -48,18 +48,21 @@ const CreateModal = ({
   useEffect(() => {
     if (Object.keys((errors)).length > 0) {
       Object.keys((errors)).map((key) => {
-        toast.error(errors[key].message)
+        const fieldError = errors[key as keyof typeof errors]
+        if (fieldError?.message) {
+          toast.error(fieldError.message)
+        }
       })
     }
   }, [errors])
 
-  const handleImage = (e) => {
-    setImages((prev) => {
+  const handleImage = (e:any) => {
+    setImages((prev):any => {
       return [...prev, e.target.files[0]]
     })
   }
 
-  const uploadImage = async (image, idx) => {
+  const uploadImage = async (image:any, idx:any) => {
     if (!image) return
 
     const toastId = toast.loading(`Image ${idx + 1} is being uploaded`)
@@ -79,7 +82,7 @@ const CreateModal = ({
     }
   }
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data:any) => {
     if (!images?.length) return toast.error("You must publish an image!")
 
     const imageUrls = await Promise.all(images.map((image, idx) => {
@@ -156,11 +159,12 @@ const CreateModal = ({
           style={{ display: "none" }}
           id="images"
         />
-        <Button
+        <button
           disabled={isLoading}
           className="w-[400px] bg-blue-500 text-white px-4 py-2 rounded-xl disabled:bg-blue-700"
-          label="Submit"
-        />
+        >
+          Submit
+          </button>
       </form>
     </ModalLayout>
   )

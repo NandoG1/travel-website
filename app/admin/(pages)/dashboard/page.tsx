@@ -1,12 +1,12 @@
 "use client"
 import React from 'react'
-import AdminLayout from '../../layout/AdminLayout'
+import AdminLayout from '../../layouts/adminLayout'
 import { AiFillBank, AiOutlineHome, AiOutlineUser } from 'react-icons/ai'
 import { MdHotel } from 'react-icons/md'
 import { useWidgetHook } from '../../hooks/widget-hook'
-import Widget from '../../components/Widget'
-import BigWidget from '../../components/BigWidget'
-import Chart from '../../components/Chart'
+import Widget from '../../components/widget'
+import BigWidget from '../../components/bigWidget'
+import Chart from '../../components/chart'
 
 const Dashboard = () => {
   const [

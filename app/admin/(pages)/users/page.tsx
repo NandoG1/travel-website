@@ -1,8 +1,8 @@
 "use client"
 import React from 'react'
-import AdminLayout from '../../layout/AdminLayout'
-import { DataTable } from '../../components/Data-table'
-import { columns } from './table/Columns'
+import AdminLayout from '../../layouts/adminLayout'
+import { DataTable } from '../../components/data-table'
+import { columns } from './table/columns'
 import { useQuery } from '@tanstack/react-query'
 import { getAllUsers } from '../../services/service'
 import { ClipLoader } from 'react-spinners'

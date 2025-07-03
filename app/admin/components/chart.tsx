@@ -21,7 +21,15 @@ ChartJS.register(
 )
 
 const Chart = () => {
-  const [chartData, setChartData] = useState({
+  const [chartData, setChartData] = useState<{
+    labels?: string[];
+    datasets: {
+      label: string;
+      data: number[];
+      borderColor: string;
+      backgroundColor: string;
+    }[];
+  }>({
     datasets: []
   })
   const [chartOptions, setChartOptions] = useState({})

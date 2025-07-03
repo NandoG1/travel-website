@@ -1,10 +1,10 @@
 "use client"
 import React from 'react'
-import AdminLayout from '../../layout/AdminLayout'
-import { DataTable } from '../../components/Data-table'
+import AdminLayout from '../../layouts/adminLayout'
+import { DataTable } from '../../components/data-table'
 import { useQuery } from '@tanstack/react-query'
 import { getAllReviews } from './service'
-import { columns } from './table/Column'
+import { columns } from './table/column'
 import { ClipLoader } from 'react-spinners'
 
 const Reviews = () => {

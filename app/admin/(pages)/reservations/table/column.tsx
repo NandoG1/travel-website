@@ -9,7 +9,7 @@ export const columns = [
     {
         accessorKey: "image",
         header: "Image",
-        cell: ({ row }) => {
+        cell: ({ row }:any) => {
             const image = row.getValue("listing").imageUrls[0]
 
             return (
@@ -19,6 +19,7 @@ export const columns = [
                         width="35"
                         height="35"
                         className="rounded-full object-cover"
+                        alt=''
                     />
                 </div>
             )
@@ -27,7 +28,7 @@ export const columns = [
     {
         accessorKey: "startDate",
         header: "Start Date",
-        cell: ({ row }) => {
+        cell: ({ row }:any) => {
             const startDate = row.getValue("startDate")
 
             return (
@@ -38,7 +39,7 @@ export const columns = [
     {
         accessorKey: "endDate",
         header: "End Date",
-        cell: ({ row }) => {
+        cell: ({ row }:any) => {
             const endDate = row.getValue("endDate")
 
             return (
@@ -49,7 +50,7 @@ export const columns = [
     {
         accessorKey: "user",
         header: "User",
-        cell: ({ row }) => {
+        cell: ({ row }:any) => {
             const { email } = row.getValue("user")
 
             return (
@@ -59,7 +60,7 @@ export const columns = [
     },
     {
         accessorKey: "totalPrice",
-        header: ({ column }) => {
+        header: ({ column }:any) => {
             return (
                 <button
                     className="flex justify-center items-center gap-1"
@@ -73,7 +74,7 @@ export const columns = [
                 </button>
             )
         },
-        cell: ({ row }) => {
+        cell: ({ row }:any) => {
             const totalPrice = row.getValue("totalPrice")
 
             return (
@@ -86,7 +87,7 @@ export const columns = [
     {
         accessorKey: "listing",
         header: "Listing",
-        cell: ({ row }) => {
+        cell: ({ row }:any) => {
             const { name } = row.getValue("listing")
 
             return (
@@ -97,7 +98,7 @@ export const columns = [
     {
         accessorKey: "actions",
         header: "Actions",
-        cell: ({ row }) => {
+        cell: ({ row }:any) => {
             const { chargeId, id: reservationId } = row.original
 
             const {

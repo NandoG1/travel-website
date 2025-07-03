@@ -3,17 +3,17 @@ import Image from 'next/image'
 import person_image from '../../../../../../public/assets/bianco_2.png'
 import { format } from 'timeago.js'
 import { FaPen, FaTrash } from "react-icons/fa"
-import { useUserHook } from "../../../hooks/user-hook"
+import { useUserHook } from '@/app/admin/hooks/user-hook'
 import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai'
 // import UserModal 
 import React, { useState } from 'react'
-import UserModal from '@/app/admin/modals/user-modal/UserModal'
+import UserModal from '@/app/admin/modals/user-modal/userModal'
 
 export const columns = [
     {
         accessorKey: "profilePhoto",
         header: "Profile Photo",
-        cell: ({ row }) => {
+        cell: ({ row }:any) => {
             return (
                 <Image
                     className="h-10 w-10 rounded-full object-cover"
@@ -31,7 +31,7 @@ export const columns = [
     },
     {
         accessorKey: "email",
-        header: ({ column }) => {
+        header: ({ column }:any) => {
             return (
                 <button
                     className="flex items-center gap-1"
@@ -48,7 +48,7 @@ export const columns = [
     },
     {
         accessorKey: "reservations",
-        header: ({ column }) => {
+        header: ({ column }:any) => {
             return (
                 <button
                     className="Flex items-center gap-1"
@@ -62,7 +62,7 @@ export const columns = [
                 </button>
             )
         },
-        cell: ({ row }) => {
+        cell: ({ row }:any) => {
             const value = row.getValue("reservations")?.length || 0
 
             return (
@@ -75,7 +75,7 @@ export const columns = [
     {
         accessorKey: "createdAt",
         header: "Created At",
-        cell: ({ row }) => {
+        cell: ({ row }:any) => {
             const value = row.getValue("createdAt")
             return (
                 <div>
@@ -87,7 +87,7 @@ export const columns = [
     {
         accessorKey: "actions",
         header: "Actions",
-        cell: ({ row }) => {
+        cell: ({ row }:any) => {
             const { id: userId } = row.original
             const [showModal, setShowModal] = useState(false)
 

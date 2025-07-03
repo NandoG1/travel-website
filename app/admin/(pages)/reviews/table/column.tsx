@@ -1,12 +1,12 @@
 import { format } from "date-fns"
 import { FaTrash } from "react-icons/fa"
 import { AiOutlineArrowUp, AiOutlineArrowDown } from "react-icons/ai"
-import { useReviewHook } from "@/app/admin/hooks/review-hook"
+import {useReviewHook}  from "@/app/admin/hooks/review-hook"
 
 export const columns = [
     {
         accessorKey: "stars",
-        header: ({ column }) => {
+        header: ({ column }:any) => {
             return (
                 <button
                     className="flex justify-center items-center gap-1"
@@ -20,7 +20,7 @@ export const columns = [
                 </button>
             )
         },
-        cell: ({ row }) => {
+        cell: ({ row }:any) => {
             const value = row.getValue("stars")
 
             return (
@@ -33,7 +33,7 @@ export const columns = [
     {
         accessorKey: "text",
         header: "Text",
-        cell: ({ row }) => {
+        cell: ({ row }:any) => {
             const text = row.getValue("text")
 
             return (
@@ -46,7 +46,7 @@ export const columns = [
     {
         accessorKey: "createdAt",
         header: "Created at",
-        cell: ({ row }) => {
+        cell: ({ row }:any) => {
             const value = row.getValue("createdAt")
 
             return (
@@ -59,7 +59,7 @@ export const columns = [
     {
         accessorKey: "actions",
         header: "Actions",
-        cell: ({ row }) => {
+        cell: ({ row }:any) => {
             const id = row.original.id
             const { handleDeleteReview, isPending } = useReviewHook()
 

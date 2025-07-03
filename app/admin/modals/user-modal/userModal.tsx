@@ -5,26 +5,24 @@ import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { schema } from './schema'
-import ModalLayout from '../../layout/ModalLayout'
-import Input from '@/ui/Input'
-import Button from '@/ui/Button'
+import ModalLayout from '../../layouts/modalLayout'
+import Input from '@/ui/input'
+// import Button from '@/ui/Button'
+// import { getUserById, updateUser } from './service'
 import { getUserById, updateUser } from './service'
 
 const UserModal = ({
     userId,
     handleHideModal
-}) => {
-    const { data: user, isPending } = useQuery({
+}:any) => {
+    const { data: user, isPending }:any = useQuery({
         queryFn: () => getUserById(userId),
-        queryKey: ["admin", "users", { userId }],
-        onSuccess: () => {
-            reset({ username: user.username, email: user.email })
-        }
+        queryKey: ["admin", "users", { userId }]
     })
 
     const queryClient = useQueryClient()
     const { mutate: handleUpdateUser, isPending: isPendingMutation } = useMutation({
-        mutationFn: ({ userId, data }) => updateUser({ userId, data }),
+        mutationFn: ({ userId, data }:any) => updateUser({ userId, data }),
         onSuccess: () => {
             toast.success("Successfully updated the user")
             queryClient.invalidateQueries({
@@ -48,7 +46,7 @@ const UserModal = ({
         })
     }, [user?.username, user?.email])
 
-    const onSubmit = (data) => {
+    const onSubmit = (data:any) => {
         handleUpdateUser({ userId, data })
         handleHideModal()
     }
@@ -75,11 +73,12 @@ const UserModal = ({
                     placeholder="john@gmail.com"
                     register={register("email")}
                 />
-                <Button
+                <button
                     className="w-1/2 bg-blue-500 text-white px-4 py-2 rounded-xl disabled:bg-blue-700"
                     disabled={isPendingMutation}
-                    label="Submit"
-                />
+                >
+                    Submit
+                    </button>
             </form>
         </ModalLayout>
     )
