@@ -8,12 +8,17 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
 
 export async function POST(req:any) {
     try {
+        const body = await req.json();
+        console.log('Stripe API received:', body);
+
         const {
             listing: { name, pricePerNight, id: listingId },
             startDate,
             endDate,
             daysDifference
-        } = await req.json()
+        } = body;
+
+        console.log('Extracted data:', { name, pricePerNight, listingId, startDate, endDate, daysDifference });
 
         const stripe_obj = [
             {
@@ -22,13 +27,21 @@ export async function POST(req:any) {
                     product_data: {
                         name
                     },
-                    unit_amount: pricePerNight
+                    unit_amount: Math.round(pricePerNight * 100) // Convert to cents for IDR
                 },
                 quantity: daysDifference
             }
         ]
 
-        const currentUser:any = await getCurrentUser() || ""
+        console.log('Stripe object:', stripe_obj);
+
+        const currentUser:any = await getCurrentUser();
+        console.log('Current user:', currentUser);
+
+        if (!currentUser) {
+            console.error('No current user found');
+            return NextResponse.json({ error: 'User not authenticated' }, { status: 401 });
+        }
 
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ["card"],
@@ -47,10 +60,13 @@ export async function POST(req:any) {
             }
         })
 
+        console.log('Session created:', session.id);
+
         return NextResponse.json({ sessionId: session.id })
     } 
     catch (error) {
-        return NextResponse.json(error)
+        console.error('Stripe API error:', error);
+        return NextResponse.json({ error: 'Failed to create checkout session', details: error }, { status: 500 });
     }
 }
 

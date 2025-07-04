@@ -62,33 +62,33 @@ function BookModals({listing, handleHideModal} : any ) {
             </div>
             <div className='p-4 flex items-center justify-between'>
                 <h2 className='font-semibold text-[20px]'>
-                    Arabian Paradise
+                    {listing?.name || 'Hotel Name'}
                 </h2>
                 <span className='text-slate-800'>
-                    {format(300, {locale: "id-ID"})}
+                    {format(listing?.pricePerNight || 0, {locale: "id-ID"})}
                 </span>
             </div>
             <form action="" className="p-4 flex flex-col gap-4"> 
                 {/* disable date */}
-                <DateRangePicker ranges={[selectionRange]} minDate={new Date()} disabledDates={listing?.reservations?.flatmap(({reservedDated}:any) => reservedDated)} onChange={({selection}: any) => {
+                <DateRangePicker ranges={[selectionRange]} minDate={new Date()} disabledDates={listing?.reservations?.flatMap(({reservedDated}:any) => reservedDated)} onChange={({selection}: any) => {
                     setDateRange([selection.startDate, selection.endDate])
                 }}/>
             </form>
             <div className="p-4 mt-4 border-t border-slate-500 flex items-end justify-between">
                 <div className="text-slate-700 flex items-center gap-2">
                     <span>
-                        {format(300, {locale: "id-ID"})}
+                        {format(listing?.pricePerNight || 0, {locale: "id-ID"})}
                     </span>
                     <span>X</span>
                     <span>{calcDaysDiff()}</span>
                 </div>
                 <div className="text-slate-700 mt-4">
-                    Total Price: {format((300 * calcDaysDiff()), {locale: "id-ID"})}
+                    Total Price: {format(((listing?.pricePerNight || 0) * calcDaysDiff()), {locale: "id-ID"})}
                 </div>
             </div>
             <div className="w-full flex items-center mt-6">
                 <button onClick={handlePayment} disabled={isLoading} className="w-3/4 mx-auto cursor-pointer rounded-lg py-3 px-6 text-xl text-white bg-blue-500 transition-all hover:bg-blue-600">
-                    Sumbit
+                    Submit
                 </button>
 
             </div>
