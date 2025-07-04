@@ -2,17 +2,8 @@ import db from "@/lib/db";
 import { NextResponse } from "next/server";
 import isAdminUser from "@/lib/isAdminUser";
 
-import Abu_dhabi from "@/public/AbuDhabi.jpg"
-import Dubai from "@/public/dubai.jpg"
-import Berlin from "@/public/berlin.jpg"
-import Hambrug from "@/public/Hamburg.jpg"
-import Paris from "@/public/paris.jpg"
-import St_tropez from "@/public/StTropez.jpg"
-import Mumbai from "@/public/Mumbai.jpg"
-import Delhi from "@/public/delhi.jpg"
-
-export async function GET(req:any){
-    try{
+export async function GET(req: any) {
+    try {
         const abudhabi_listings = await db.listing.count({
             where: {
                 location: "abu-dhabi"
@@ -38,14 +29,14 @@ export async function GET(req:any){
                 location: "berlin"
             }
         })
-        const hambrug_listings = await db.listing.count({
+        const hamburg_listings = await db.listing.count({
             where: {
-                location: "hambrug"
+                location: "hamburg" // Fixed typo
             }
         })
         const st_tropez_listings = await db.listing.count({
             where: {
-                location: "st_tropez"
+                location: "st-tropez" // Fixed to match return value
             }
         })
         const paris_listings = await db.listing.count({
@@ -57,50 +48,51 @@ export async function GET(req:any){
         const results = [
             {
                 numOfPlace: abudhabi_listings,
-                image: Abu_dhabi.src,
+                image: "/AbuDhabi.jpg", // Direct path to public folder
                 value: "abu-dhabi"
             },
-             {
+            {
                 numOfPlace: dubai_listings,
-                image: Dubai.src,
+                image: "/dubai.jpg",
                 value: "dubai"
             },
-             {
+            {
                 numOfPlace: mumbai_listings,
-                image: Mumbai.src,
+                image: "/Mumbai.jpg",
                 value: "mumbai"
             },
-             {
+            {
                 numOfPlace: delhi_listings,
-                image: Delhi.src,
+                image: "/delhi.jpg",
                 value: "delhi"
             },
-             {
+            {
                 numOfPlace: berlin_listings,
-                image:Berlin.src,
+                image: "/berlin.jpg",
                 value: "berlin"
             },
-             {
-                numOfPlace: hambrug_listings,
-                image: Hambrug.src,
-                value: "hambrug"
+            {
+                numOfPlace: hamburg_listings,
+                image: "/Hamburg.jpg",
+                value: "hamburg" // Fixed typo
             },
-             {
+            {
                 numOfPlace: st_tropez_listings,
-                image: St_tropez.src,
+                image: "/StTropez.jpg",
                 value: "st-tropez"
             },
-             {
+            {
                 numOfPlace: paris_listings,
-                image: Paris.src,
+                image: "/paris.jpg",
                 value: "paris"
             },
         ]
-        const sortedResults = results.sort((a,b) => b.numOfPlace - a.numOfPlace).slice(0,4)
+        
+        const sortedResults = results.sort((a, b) => b.numOfPlace - a.numOfPlace).slice(0, 4)
 
         return NextResponse.json(sortedResults);
     }
-    catch(error){
+    catch (error) {
         return NextResponse.json(error);
     }
 }

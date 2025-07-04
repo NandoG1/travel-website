@@ -16,7 +16,7 @@ function Card({place}: any) {
   return (
     <Link href={url} className='cursor-pointer h-[500px] w-[350px] flex flex-col flex-warp rounded-xl shadow-md'>
         <div className='relative h-2/3 w-full'>
-            <Image src={place.image} alt='' fill className='h-full w-full overflow-hidden rounded-tl-xl rounded-tr-xl object-cover'
+            <Image src={place.image} alt='' width={100} height={100} className='h-full w-full overflow-hidden rounded-tl-xl rounded-tr-xl object-cover'
             />
             <div className='absolute right-0 bottom-0 capitalize p-4 bg-blue-700 text-white rounded-tl-xl font-semibold'>
                 {place.value}

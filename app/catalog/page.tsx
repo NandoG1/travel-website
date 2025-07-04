@@ -154,7 +154,7 @@ function Catalog() {
   return (
     <div className='min-h-screen w-full'>
       <div className='relative h-3/5 w-full'>
-        <Image src={image} alt=''  className='brightness-40 h-screen w-full object-cover' />
+        <Image src={image} alt='' width={100} height={100} className='brightness-40 h-screen w-full object-cover' />
         <h3 className='absolute text-6xl capitalize font-semibold flex items-center justify-center bottom-0 left-0 right-0 top-0 text-white '>
           {city_name}
         </h3>

@@ -1,6 +1,6 @@
 "use client"
 import Image from 'next/image'
-import person_image from '../../../../../../public/assets/bianco_2.png'
+import person_image from "@/public/bianco_2.png"
 import { format } from 'timeago.js'
 import { FaPen, FaTrash } from "react-icons/fa"
 import { useUserHook } from '@/app/admin/hooks/user-hook'
