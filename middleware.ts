@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export default async function middleware(req:any) {
     const token = await getToken({ req })
     const pathname = req.nextUrl.pathname
-    const urlOrigin = "http://localhost:3000/" 
+    const urlOrigin = req.nextUrl.origin 
     // ? change
 
     if (pathname.includes('/admin') && !token?.isAdmin) {
@@ -12,7 +12,7 @@ export default async function middleware(req:any) {
     }
 
     if(!pathname.includes('/login') && !pathname.includes('/signup') && !token){
-        return NextResponse.redirect(urlOrigin + 'login')
+        return NextResponse.redirect(urlOrigin + '/login')
     }
 
     if((pathname.includes('/login') || pathname.includes('/signup')) && token){

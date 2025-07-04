@@ -43,12 +43,16 @@ export async function POST(req:any) {
             return NextResponse.json({ error: 'User not authenticated' }, { status: 401 });
         }
 
+        const baseUrl = process.env.VERCEL_URL 
+            ? `https://${process.env.VERCEL_URL}` 
+            : 'http://localhost:3000';
+
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ["card"],
             line_items: stripe_obj,
             mode: "payment",
-            success_url: "http://localhost:3000/success-page",
-            cancel_url: "http://localhost:3000",
+            success_url: `${baseUrl}/success-page`,
+            cancel_url: baseUrl,
             metadata: {
                 startDate,
                 endDate,
