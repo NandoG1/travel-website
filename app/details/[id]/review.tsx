@@ -6,23 +6,33 @@ import { format } from 'date-fns'
 
 function Review({review}:any) {
   return (
-    <div className='w-full flex gap-4'>
-        <div className='w-14 h-14'>
-            <Image src={person_image} alt="" className='w-full h-full object-cover rounded-full'/>
-        </div>
-        <div>
-            <h3 className='font-semibold text-[20px]'>John Doe</h3>
-            <span className='text-slate-700'>
-              {(format(review.createdAt, "MMM do yyyy"))}
-            </span>
-            <div className='mt-4 text-slate-800'>
-             {review.text}
+    <div className='bg-gray-50 rounded-xl p-6 hover:shadow-md transition-shadow duration-200'>
+        <div className='flex items-start gap-4'>
+            <div className='w-12 h-12 flex-shrink-0'>
+                <Image 
+                    src={person_image} 
+                    alt="" 
+                    className='w-full h-full object-cover rounded-full border-2 border-gray-200'
+                />
+            </div>
+            <div className='flex-1'>
+                <div className='flex items-center justify-between mb-2'>
+                    <div>
+                        <h3 className='font-semibold text-lg text-gray-900'>John Doe</h3>
+                        <span className='text-sm text-gray-500'>
+                            {format(review.createdAt, "MMM do, yyyy")}
+                        </span>
+                    </div>
+                    <div className='flex items-center gap-1 bg-blue-100 px-3 py-1 rounded-full'>
+                        <span className='font-semibold text-blue-600'>{review.stars}</span>
+                        <AiFillStar size={16} color='rgb(59,130,246)'/>
+                    </div>
+                </div>
+                <div className='text-gray-700 leading-relaxed'>
+                    {review.text}
+                </div>
             </div>
         </div>
-        <span className='ml-auto flex items-center gap-2'>
-            {review.stars}
-            <AiFillStar size={22} color='rgb(59,130,246)'/>
-        </span>
     </div>
   )
 }

@@ -1,125 +1,171 @@
 "use client"
 
 import Image from 'next/image';
-import hotel_image_1 from "@/public/hr_1.jpg"
-import hotel_image_2 from "@/public/hr_2.jpg"
-import React, { useEffect, useRef, useState, use } from 'react'
-import { register } from 'swiper/element/bundle';
+import React, { use, useRef, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
 import { AiFillStar } from 'react-icons/ai';
-import { FaBed, FaWifi } from 'react-icons/fa'
-import { CiLocationOn } from 'react-icons/ci'
-import { format } from 'currency-formatter'
+import { FaBed, FaWifi, FaMapMarkerAlt, FaCalendarAlt } from 'react-icons/fa';
+import { ClipLoader } from 'react-spinners';
+import { format } from 'currency-formatter';
+
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
 import Reviews from './reviews';
 import BookModals from '@/components/book-modal/bookModals';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation'; 
-import { useQuery } from '@tanstack/react-query';
 import { getListingById } from './service';
-import { ClipLoader } from 'react-spinners'
-
-register()
 
 function HotelsDetails({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = use(params);
-  const [selectedStar, setSelectedStar] = useState(5);
-  const [showModal, setShowModal] = useState(false);
-  const swiperElRef:any = useRef(null);
+    const { id } = use(params);
+    const [showModal, setShowModal] = useState(false);
+    
+    const { data: listing, isPending, error } = useQuery({
+        queryKey: ["listings", { id }],
+        queryFn: () => getListingById(id),
+    });
 
-  const { data: listing, isPending } = useQuery({
-    queryKey: ["listings", { id }],
-    queryFn: () => getListingById(id)
-  })
+    const handleShowModal = () => setShowModal(true);
+    const handleHideModal = () => setShowModal(false);
 
-  const handleShowModal = () => setShowModal(prev => true);
-  const handleHideModal = () => setShowModal(prev => false);
-
-  if(isPending){
-    const style = {
-      marginTop: "5rem",
-      position: "absolute" as const,
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, -50%)",
-      height: "100vh"
+    if (isPending) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gray-50">
+                <div className="text-center">
+                    <ClipLoader color={"#3B82F6"} size={50} />
+                    <p className="mt-4 text-gray-600">Loading hotel details...</p>
+                </div>
+            </div>
+        );
     }
+
+    if (error || !listing) { // Added !listing check for robustness
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gray-50">
+                 <p className="text-red-600">Failed to load hotel details.</p>
+            </div>
+        )
+    }
+
     return (
-      <div style={style}>
-        <ClipLoader
-          color={"#123abc"}
-        />
-      </div>
-    )
-  }
-
-  // useEffect(() => {
-
-  // })
-  return (
-    <div className={`min-h-screen w-full mt-24 ${showModal && "overflow-hidden"}`}>
-      {showModal && <BookModals listing={listing} handleHideModal={handleHideModal} />}
-      <div className='h-full w-3/4 mx-auto'>
-        <div>
-          <div className='w-full h-[750px] overflow-hidden mx-auto'>
-            <div className='w-full h-full'>
-             <Swiper
-                modules={[Navigation]}
-                slidesPerView={1}
-                navigation
-                onSwiper={(swiper) => {
-                  swiperElRef.current = swiper;
-                }}
-              >
-                {listing?.imageUrls?.map((imageUrl:any, index: number) => (
-                  <SwiperSlide key={`${imageUrl}-${index}`}>
-                     <Image src={imageUrl} height={100} width={100} blurDataURL={listing.blurredImage} placeholder='blur' alt="" className='h-[750px] w-full object-cover rounded-lg' />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-
+        <div className={`min-h-screen bg-gray-50 ${showModal ? "overflow-hidden" : ""}`}>
+            {showModal && <BookModals listing={listing} handleHideModal={handleHideModal} />}
+            
+            <div className='relative'>
+                {/* Hero Section */}
+                <div className="h-[50vh] md:h-[60vh] bg-gray-200">
+                    <Swiper
+                        modules={[Navigation, Pagination]}
+                        slidesPerView={1}
+                        navigation
+                        pagination={{ clickable: true }}
+                        className="h-full w-full"
+                    >
+                        {listing.imageUrls?.map((imageUrl: string, index: number) => (
+                            <SwiperSlide key={`${imageUrl}-${index}`} className="bg-black">
+                                <div className="relative h-full w-full">
+                                    <Image 
+                                        src={imageUrl} 
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, 50vw"
+                                        placeholder='blur'
+                                        blurDataURL={listing.blurredImage}
+                                        alt={`View of ${listing.name} #${index + 1}`} 
+                                        className='object-cover'
+                                    />
+                                    <div className="absolute inset-0 opacity-20"></div>
+                                </div>
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
+                </div>
+                
+                {/* FIX: Floating card now ONLY contains the booking information */}
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-full max-w-6xl px-4 z-10">
+                     <div className="bg-white rounded-2xl shadow-2xl p-6 md:p-8">
+                         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+                             {/* Hotel Name and basic info */}
+                             <div className="flex-1">
+                                 <h1 className='text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-3'>
+                                     {listing.name}
+                                 </h1>
+                                 <div className="flex flex-wrap items-center gap-4 text-gray-600">
+                                     <div className="flex items-center gap-2">
+                                         <FaBed className="text-blue-600" />
+                                         <span className="font-medium">{listing.beds} beds</span>
+                                     </div>
+                                     {listing.hasFreeWifi && (
+                                         <div className="flex items-center gap-2">
+                                             <FaWifi className="text-green-600" />
+                                             <span className="font-medium">Free WiFi</span>
+                                         </div>
+                                     )}
+                                     <div className="flex items-center gap-2">
+                                         <FaCalendarAlt className="text-orange-600" />
+                                         <span className="font-medium">Instant booking</span>
+                                     </div>
+                                 </div>
+                             </div>
+                             
+                             {/* Price and Book Now button */}
+                             <div className="flex flex-col sm:flex-row lg:flex-col items-center gap-4">
+                                 <div className="text-center lg:text-right">
+                                     <div className="text-3xl font-bold text-gray-900">
+                                         {format(listing.pricePerNight, { locale: 'id-ID' })}
+                                     </div>
+                                     <div className="text-gray-600">per night</div>
+                                 </div>
+                                 <button
+                                     onClick={handleShowModal}
+                                     className='bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold text-lg transition-all'
+                                 >
+                                     Book Now
+                                 </button>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
             </div>
-          </div>
-          <div className='mt-12 px-6 w-full flex items-center justify-between'>
-            <h2 className='font-bold text-4xl'>
-              {listing.name}
-            </h2>
-            <div>
-              <span className='p-2 px-4 text-[22px] rounded-full bg-blue-600 text-white flex items-center gap-2'>
-                <AiFillStar color='white' />
-                <span className='text-white'>
-                  {listing.avgRating}
-                </span>
-              </span>
-            </div>
-          </div>
-          <div className='mt-16 px-6 flex items-center gap-8'>
-             <span className='flex items-center gap-2'><CiLocationOn />{listing.location}</span>
-              <span className='flex items-center gap-2'>{format(listing.pricePerNight, { locale: 'id-ID' })}/night</span>
-              <span className='flex items-center gap-2'>{listing.beds} <FaBed /></span>
-              {listing.hasFreeWifi && <span className='flex items-center gap-2'>Free <FaWifi /></span>}
-          </div>
-          <div className='mt-16 px-6 w-full flex items-end justify-between'>
-              <p className='text-xl max-w-xl text-slate-700'>
-                 {listing.desc}
-              </p>
-              <button
-                  onClick={handleShowModal}
-                  className='cursor-pointer rounded-lg py-2 px-6 text-xl text-white bg-blue-500'
-              >
-                  Book
-              </button>
-          </div>
+
+            {/* Content Section - Pushed down to make space for the floating card */}
+            <div className="max-w-6xl mx-auto px-4 pt-48 pb-16">
+                 {/* FIX: The overlapping content is now moved here, in the main description area */}
+                 <div className="mb-16">
+                     <div className="bg-white rounded-2xl shadow-sm p-8">
+                         <h2 className="text-2xl font-bold text-gray-900 mb-4">About this place</h2>
+                         
+                         {/* This is where your description and tags should be */}
+                         <p className="text-gray-700 leading-relaxed mb-6">
+                             {listing.desc}
+                         </p>
+
+                         <div className="flex flex-wrap gap-3">
+                             {/* Example of how to display the tags */}
+                             <span className="bg-pink-100 text-pink-800 text-sm font-medium px-4 py-2 rounded-full">skateladus</span>
+                             <span className="bg-pink-100 text-pink-800 text-sm font-medium px-4 py-2 rounded-full">Noklt lindhg</span>
+                             <span className="bg-pink-100 text-pink-800 text-sm font-medium px-4 py-2 rounded-full">Insleads</span>
+                             <span className="bg-pink-100 text-pink-800 text-sm font-medium px-4 py-2 rounded-full">Nuais I uoamis</span>
+                         </div>
+                     </div>
+                 </div>
+
+                 {/* Reviews Section */}
+                 <div className="bg-white rounded-2xl shadow-sm p-8">
+                     <div className="flex items-center gap-4 mb-8">
+                         <h2 className="text-2xl font-bold text-gray-900">Guest Reviews</h2>
+                         <div className="flex items-center gap-2 bg-blue-50 px-4 py-2 rounded-full">
+                             <AiFillStar className="text-blue-600" size={20} />
+                             <span className="font-semibold text-blue-600">{listing.avgRating}</span>
+                             <span className="text-gray-600 text-sm">rating</span>
+                         </div>
+                     </div>
+                     <Reviews id={id} />
+                 </div>
+             </div>
         </div>
-        <div className='border-t-2 border-white-800 px-6 mt-16 mx-auto'>
-          <h1 className='mt-16 text-3xl font-bold'>
-            Reviews
-          </h1>
-          <Reviews id={id} />
-        </div>
-      </div>
-    </div>
-  )
+    );
 }
 
-export default HotelsDetails
+export default HotelsDetails;
