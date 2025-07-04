@@ -16,7 +16,7 @@ import { useSearchParams, useRouter } from 'next/navigation'
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
-import React, { useEffect } from 'react'
+import React, { useEffect, Suspense } from 'react'
 import { toast } from 'react-hot-toast'
 import { getFilteredListings } from './service'
 import { schema } from './schema'
@@ -33,7 +33,8 @@ interface HotelsProps{
   location: string
 }
 
-function Catalog() {
+// Separate component that uses useSearchParams
+function CatalogContent() {
   const data: HotelsProps[] = [
     {
       name: "Arabian Paradise",
@@ -329,6 +330,27 @@ function Catalog() {
         )}
       </div>
     </div>
+  )
+}
+
+// Loading component for Suspense
+function CatalogLoading() {
+  return (
+    <div className='min-h-screen w-full bg-gray-50 flex items-center justify-center'>
+      <div className="flex flex-col items-center gap-4">
+        <ClipLoader size={50} color="#3B82F6" />
+        <p className="text-gray-600 text-lg">Loading catalog...</p>
+      </div>
+    </div>
+  )
+}
+
+// Main component with Suspense boundary
+function Catalog() {
+  return (
+    <Suspense fallback={<CatalogLoading />}>
+      <CatalogContent />
+    </Suspense>
   )
 }
 
