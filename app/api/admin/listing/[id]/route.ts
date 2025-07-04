@@ -6,7 +6,8 @@ export async function GET(req:any, ctx:any) {
     try {
         await isAdminUser()
 
-        const { id } = ctx.params
+        const params = await ctx.params;
+        const { id } = params;
 
         const listing = await db.listing.findUnique({
             where: { id }
@@ -22,7 +23,8 @@ export async function PUT(req:any, ctx:any) {
     try {
         await isAdminUser()
 
-        const { id } = ctx.params
+        const params = await ctx.params;
+        const { id } = params;
         const body = await req.json()
 
         const updatedListing = await db.listing.update({
@@ -39,7 +41,8 @@ export async function PUT(req:any, ctx:any) {
 export async function DELETE(req:any, ctx:any) {
     try {
         await isAdminUser()
-        const { id } = ctx.params
+        const params = await ctx.params;
+        const { id } = params;
 
         const deletedListing = await db.listing.delete({
             where: { id }
