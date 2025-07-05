@@ -105,6 +105,9 @@ A modern, full-stack hotel booking platform built with Next.js 15, featuring sec
    ```
 7. **Open your browser**
    Navigate to [http://localhost:3000](http://localhost:3000)
+   
+## 🎥 Demo & Proposal
+   - [View the proposal here](https://docs.google.com/document/d/1TgtpsjO9hhHVc3fXdHgMsyAXeMWq4FEn/edit?usp=sharing&ouid=113197811322884432302&rtpof=true&sd=true)
 
 ## 📝 License
 
