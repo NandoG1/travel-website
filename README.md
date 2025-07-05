@@ -1,36 +1,111 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TravelStay - Hotel Booking Platform
 
-## Getting Started
+A modern, full-stack hotel booking platform built with Next.js 15, featuring secure payment processing, comprehensive admin dashboard, and order hotels.
 
-First, run the development server:
+## ✨ Key Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### User Management
+- **Authentication & Authorization**: Secure user registration and login with NextAuth.js
+- **Role-based Access Control**: Separate interfaces for regular users and administrators
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Hotel Management
+- **Property Listings**: Browse hotels with detailed information, images, and details
+- **Advanced Search & Filtering**: Filter by location, price range, property type, and availability
+- **Hotel Details**: Comprehensive hotel pages with image galleries, review, and details
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Booking System
+- **Real-time Availability**: Check and book available dates with calendar integration
+- **Instant Booking**: Streamlined booking process with immediate confirmation
+- **Booking Management**: View, manage, and cancel reservations
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Payment Processing
+- **Stripe Integration**: Secure payment processing with Stripe Checkout
+- **Multiple Payment Methods**: Support for various payment options
+- **Payment Webhooks**: Real-time payment status updates
 
-## Learn More
+### Admin Dashboard
+- **Analytics & Insights**: Revenue tracking with interactive charts
+- **User Management**: CRUD operations for user accounts
+- **Listing Management**: Add, edit, and delete hotel properties
+- **Reservation Management**: Monitor and manage all bookings
+- **Review Management**: Moderate and manage customer reviews
+- **Financial Reports**: Track revenue, bookings, and performance metrics
 
-To learn more about Next.js, take a look at the following resources:
+## Technology Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Frontend
+- **Next.js 15**
+- **TypeScript**
+- **Tailwind CSS**
+- **TanStack Query**
+- **Zod** 
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Backend & Database
+- **Next.js API Routes**
+- **Prisma** 
+- **MongoDB** 
+- **NextAuth.js**
 
-## Deploy on Vercel
+### Payment & Storage
+- **Stripe** 
+- **Cloudinary** 
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🚀 Getting Started
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/NandoG1/travel-website
+   cd my-app
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Environment Setup**
+   Create a `.env.local` file in the root directory:
+   ```env
+   # Database
+   DATABASE_URL="your_mongodb_connection_string"
+   
+   # NextAuth
+   NEXTAUTH_SECRET="your_nextauth_secret"
+   NEXTAUTH_URL="http://localhost:3000"
+   
+   # Stripe
+   STRIPE_SECRET_KEY="your_stripe_secret_key"
+   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY="your_stripe_publishable_key"
+   STRIPE_WEBHOOK_SECRET="your_stripe_webhook_secret"
+   
+   # Cloudinary
+   NEXT_PUBLIC_CLOUD_NAME="your_cloudinary_cloud_name"
+   NEXT_PUBLIC_UPLOAD_PRESET="your_cloudinary_upload_preset"
+   ```
+
+4. **Database Setup**
+   ```bash
+   # Generate Prisma client
+   npx prisma generate
+   
+   # Push database schema
+   npx prisma db push
+   ```
+
+5. **Stripe Webhooks**
+   Configure webhook endpoints in your Stripe dashboard:
+   - **Endpoint URL**: `https://yourdomain.com/api/webhook`
+   - **Events**: `checkout.session.completed`
+
+6. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+7. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
