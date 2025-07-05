@@ -124,11 +124,11 @@ function Card({ reservation, mutate }: CardProps) {
           <div className='flex items-center justify-between'>
             <div>
               <div className='text-sm text-gray-600'>Total Amount</div>
-              <div className='text-2xl font-bold text-gray-900'>${totalPrice.toLocaleString()}</div>
+              <div className='text-2xl font-bold text-gray-900'>Rp. {totalPrice.toLocaleString()}</div>
             </div>
             <div className='text-right'>
               <div className='text-sm text-gray-600'>Per Night</div>
-              <div className='text-lg font-semibold text-gray-700'>${reservation.listing.pricePerNight}</div>
+              <div className='text-lg font-semibold text-gray-700'>Rp. {reservation.listing.pricePerNight}</div>
             </div>
           </div>
         </div>
