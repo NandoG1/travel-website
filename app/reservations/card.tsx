@@ -113,10 +113,6 @@ function Card({ reservation, mutate }: CardProps) {
             <Clock size={14} />
             <span>{reservation.daysDifference} {reservation.daysDifference === 1 ? 'night' : 'nights'}</span>
           </div>
-          <div className='flex items-center gap-2'>
-            <Users size={14} />
-            <span>2 guests</span>
-          </div>
         </div>
 
         {/* Price Section */}
