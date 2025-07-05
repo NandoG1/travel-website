@@ -98,12 +98,6 @@ const Chart = () => {
             borderColor: "rgb(59, 130, 246)",
             backgroundColor: "rgba(59, 130, 246, 0.6)"
           },
-          {
-            label: "Bookings Count",
-            data: processedData.map(day => day.bookings * 1000), // Scale up for visibility
-            borderColor: "rgb(16, 185, 129)",
-            backgroundColor: "rgba(16, 185, 129, 0.6)"
-          }
         ]
       })
     } else {
@@ -128,7 +122,7 @@ const Chart = () => {
         },
         title: {
           display: true,
-          text: "Last 7 Days - Revenue & Bookings"
+          text: "Last 7 Days - Revenue"
         },
         tooltip: {
           callbacks: {
