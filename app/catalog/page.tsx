@@ -94,66 +94,69 @@ function CatalogContent() {
     },
   ]
 
-  const searchParams = useSearchParams()
-
-  const city = searchParams.get("city")
-  const min_price = searchParams.get("min_price")
-  const max_price = searchParams.get("max_price")
-  const type = searchParams.get("type")
-  const router = useRouter()
-
-  const locationData:any = optionLocations.find(location => location.value === city)
-  const {
-    city: city_name,
-    value,
-    image: cityImage
-  } = locationData || { city: "All Cities", value: "", image: image }
-
-  console.log(city_name, value, cityImage)
-
-  const defaultValues = {
-    location: value,
-    min_price: min_price ? Number(min_price) : 0,
-    max_price: max_price ? Number(max_price) : 0,
-    type: type || ""
-  }
-
-  const {
-    register,
-    handleSubmit,
-    getValues,
-    formState: {
-      errors
-    }
-  } = useForm({
-    defaultValues,
-    resolver: zodResolver(schema)
-  })
-
-  const queryClient = useQueryClient()
-  const { data: listings, isPending } = useQuery({
-    queryFn: () => getFilteredListings(getValues()),
-    queryKey: ["listings"]
-  });
-
-  // useEffect(() => {
-  //   if (errors) {
-  //     Object.keys(errors).map((key) => {
-  //       const fieldKey = key as keyof typeof errors;
-  //       toast.error(errors[fieldKey]?.message)
-  //     })
-  //   }
-  // }, [errors])
-
-  const onSubmit = async (data:any) => {
-    await getFilteredListings(data)
-
-    queryClient.invalidateQueries({ queryKey: ["listings"] })
-
-    const newUrl = `/catalog?city=${data.location}&min_price=${data.min_price}&max_price=${data.max_price}&type=${data.type}`
-
-    router.push(newUrl, { scroll: false })
-  }
+ const searchParams = useSearchParams();
+    const router = useRouter();
+    
+    const city = searchParams.get("city") || "";
+    const min_price = searchParams.get("min_price") || "0";
+    const max_price = searchParams.get("max_price") || "10000000";
+    const type = searchParams.get("type") || "";
+    
+    const locationData = optionLocations.find(location => location.value === city);
+    const {
+        city: city_name,
+        value,
+        image: cityImage
+    } = locationData || { city: "All Cities", value: "", image: image };
+    
+    const defaultValues = {
+        location: value,
+        min_price: min_price ? Number(min_price) : 0,
+        max_price: max_price ? Number(max_price) : 10000000,
+        type: type || ""
+    };
+    
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors }
+    } = useForm({
+        defaultValues,
+        resolver: zodResolver(schema)
+    });
+    
+    // Watch form values for reactive querying
+    const formValues = watch();
+    
+    const queryClient = useQueryClient();
+    
+    // Include filter parameters in query key for proper caching
+    const { data: listings, isPending, error } = useQuery({
+        queryFn: () => getFilteredListings(formValues),
+        queryKey: ["listings", formValues.location, formValues.min_price, formValues.max_price, formValues.type],
+        staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+        retry: 2,
+        enabled: true // Always enabled, but will use cache when available
+    });
+    
+    const onSubmit = async (data:any) => {
+        // Update URL and let React Query handle the data fetching
+        const params = new URLSearchParams({
+            city: data.location || '',
+            min_price: data.min_price?.toString() || '0',
+            max_price: data.max_price?.toString() || '10000000',
+            type: data.type || ''
+        });
+        
+        const newUrl = `/catalog?${params}`;
+        router.push(newUrl, { scroll: false });
+        
+        // Invalidate query to refetch with new parameters
+        queryClient.invalidateQueries({ 
+            queryKey: ["listings"] 
+        });
+    };
 
   const EmptyState = () => (
     <div className="w-full flex flex-col items-center justify-center py-20">
@@ -215,7 +218,7 @@ function CatalogContent() {
                   City
                 </label>
                 <Select 
-                  register={register("location")} 
+                  {...register("location")} 
                   data={optionLocations} 
                   className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none bg-white text-gray-900" 
                 />
@@ -250,7 +253,7 @@ function CatalogContent() {
                   Hotel Type
                 </label>
                 <Select 
-                  register={register("type")} 
+                  {...register("type")} 
                   data={optionTypes} 
                   className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none bg-white text-gray-900"
                 />
@@ -315,7 +318,7 @@ function CatalogContent() {
             {/* Hotels Grid */}
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
               {listings && listings.length > 0 ? (
-                listings.map((place, index) => (
+                listings.map((place:any, index:any) => (
                   <div key={index} className="transform transition-all duration-200 hover:scale-105">
                     <Card place={place} />
                   </div>

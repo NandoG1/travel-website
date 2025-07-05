@@ -5,6 +5,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { deleteReservation, getUserReservations } from "./service"
 import { toast } from "react-hot-toast"
 import { Calendar, Filter, Search, MapPin, Loader2 } from 'lucide-react'
+import Link from 'next/link'
 
 function Reservations() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -134,9 +135,9 @@ function Reservations() {
             <p className='text-gray-600 mb-8 max-w-md mx-auto'>
               Start planning your next adventure! Browse our amazing hotels and make your first reservation.
             </p>
-            <button className='bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors'>
-              Explore Hotels
-            </button>
+            <Link href="/" className='bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors'>
+              Explore Hotels Now!
+            </Link>
           </div>
         ) : (
           <div className='text-center py-16'>

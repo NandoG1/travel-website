@@ -11,7 +11,7 @@ export async function GET(req:any){
             }
         })
 
-        const sortedListings = calcAndSortListings(listings).slice(0,4)
+        const sortedListings = calcAndSortListings(listings).slice(0,6)
 
         return NextResponse.json(sortedListings)
     }

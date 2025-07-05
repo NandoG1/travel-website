@@ -14,7 +14,7 @@ function Review({review}:any) {
             <div className='flex-1'>
                 <div className='flex items-center justify-between mb-2'>
                     <div>
-                        <h3 className='font-semibold text-lg text-gray-900'>John Doe</h3>
+                        <h3 className='font-semibold text-lg text-gray-900'>Anonymus</h3>
                         <span className='text-sm text-gray-500'>
                             {format(review.createdAt, "MMM do, yyyy")}
                         </span>

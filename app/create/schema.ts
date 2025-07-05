@@ -7,8 +7,8 @@ const schema = z.object({
     desc: z.string().min(1, {message: "Desc is required"}),
     beds: z.number().min(1, {message: "Beds is required"}),
     hasFreeWifi: z.boolean().optional(),
-    type: z.string(),
-    location: z.string(),
+    type: z.string().min(1, {message: "Property type is required"}),
+    location: z.string().min(1, {message: "Location is required"}),
     pricePerNight: z.number().min(10000, {message: "Price must be above 50000"}).max(10000000, {message: "Price must be lower 10000000"})
 })  
 

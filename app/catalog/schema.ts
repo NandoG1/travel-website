@@ -1,13 +1,16 @@
 import { optionLocations, optionTypes } from "@/data/data";
-import { z } from "zod"
+import { z } from "zod";
 
 const schema = z.object({
-    location: z.enum(optionLocations.map(({ value }) => value) as [string, ...string[]]),
-    min_price: z.number().min(10000, { message: "Price cant be less than 10000!" }),
-    max_price: z.number().max(10000000, { message: "Price cant exceed more than 10000000" }),
-    type: z.enum(optionTypes.map(({ value }) => value) as [string, ...string[]])
-})
+    location: z.string().optional().default(""),
+    min_price: z.number().min(0, { message: "Price can't be negative!" }).default(0),
+    max_price: z.number().max(10000000, { message: "Price can't exceed 10,000,000" }).default(10000000),
+    type: z.string().optional().default("")
+}).refine((data) => {
+    return data.max_price >= data.min_price;
+}, {
+    message: "Maximum price must be greater than minimum price",
+    path: ["max_price"]
+});
 
-export {
-    schema
-}
+export { schema };
