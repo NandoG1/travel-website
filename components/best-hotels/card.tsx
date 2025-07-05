@@ -35,7 +35,6 @@ function Card({ place, index }: any) {
       onClick={handleCardClick}
     >
       <div className='bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out overflow-hidden transform hover:-translate-y-1 h-full flex flex-col'>
-        {/* Image Container - Fixed height to prevent overflow */}
         <div className='relative h-48 w-full overflow-hidden flex-shrink-0'>
           <Image 
             src={place?.imageUrls[0]} 
@@ -79,21 +78,9 @@ function Card({ place, index }: any) {
           <div className='flex items-center gap-3 text-gray-500'>
             <div className='flex items-center gap-1'>
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0" />
-              </svg>
-              <span className='text-sm'>WiFi</span>
-            </div>
-            <div className='flex items-center gap-1'>
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-4m-5 0H3m2 0h4M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 4h1m4 0h1" />
-              </svg>
-              <span className='text-sm'>Pool</span>
-            </div>
-            <div className='flex items-center gap-1'>
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
               </svg>
-              <span className='text-sm'>Spa</span>
+              <span className='text-sm'>Secure</span>
             </div>
           </div>
           

@@ -1,20 +1,8 @@
 import axios from "axios"
 
-const getBaseURL = (): string => {
-    if (typeof window !== 'undefined') {
-        // Client side - use current origin
-        return `${window.location.origin}/api/`;
-    }
-    
-    // Server side - use environment variable or fallback
-    if (process.env.VERCEL_URL) {
-        return `https://${process.env.VERCEL_URL}/api/`;
-    }
-    
-    return "http://localhost:3000/api/";
-};
-
-const baseURL: string = getBaseURL();
+// For client-side requests, use relative URLs
+// For server-side requests, use absolute URLs when needed
+const baseURL: string = "/api/"
 
 const AXIOS_API = axios.create({
     baseURL

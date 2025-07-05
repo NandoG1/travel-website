@@ -1,19 +1,15 @@
 import React from 'react'
 import Image from 'next/image'
 import { AiFillStar } from 'react-icons/ai'
-import person_image from "@/public/bianco_2.png"
+import { FaUser } from 'react-icons/fa'
 import { format } from 'date-fns'
 
 function Review({review}:any) {
   return (
     <div className='bg-gray-50 rounded-xl p-6 hover:shadow-md transition-shadow duration-200'>
         <div className='flex items-start gap-4'>
-            <div className='w-12 h-12 flex-shrink-0'>
-                <Image 
-                    src={person_image} 
-                    alt="" 
-                    className='w-full h-full object-cover rounded-full border-2 border-gray-200'
-                />
+            <div className='w-12 h-12 flex-shrink-0 bg-gray-200 rounded-full border-2 border-gray-200 flex items-center justify-center'>
+                <FaUser className='text-gray-500' size={20} />
             </div>
             <div className='flex-1'>
                 <div className='flex items-center justify-between mb-2'>

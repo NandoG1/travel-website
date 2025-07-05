@@ -8,6 +8,7 @@ import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai'
 // import UserModal 
 import React, { useState } from 'react'
 import UserModal from '@/app/admin/modals/user-modal/userModal'
+import { FaUser } from 'react-icons/fa'
 
 export const columns = [
     {
@@ -15,13 +16,7 @@ export const columns = [
         header: "Profile Photo",
         cell: ({ row }:any) => {
             return (
-                <Image
-                    className="h-10 w-10 rounded-full object-cover"
-                    height="40"
-                    width="50"
-                    src={person_image}
-                    alt="Person's image"
-                />
+               <FaUser className='text-gray-500' size={20} />
             )
         }
     },

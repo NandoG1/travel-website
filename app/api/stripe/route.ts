@@ -43,7 +43,7 @@ export async function POST(req:any) {
             return NextResponse.json({ error: 'User not authenticated' }, { status: 401 });
         }
 
-        const baseUrl = process.env.VERCEL_URL 
+        const baseUrl = process.env.NODE_ENV === 'production' && process.env.VERCEL_URL 
             ? `https://${process.env.VERCEL_URL}` 
             : 'http://localhost:3000';
 

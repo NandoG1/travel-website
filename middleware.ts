@@ -5,7 +5,11 @@ export default async function middleware(req:any) {
     const token = await getToken({ req })
     const pathname = req.nextUrl.pathname
     const urlOrigin = req.nextUrl.origin 
-    // ? change
+
+    // Skip middleware for NextAuth API routes
+    if (pathname.startsWith('/api/auth/')) {
+        return NextResponse.next()
+    }
 
     if (pathname.includes('/admin') && !token?.isAdmin) {
         return NextResponse.redirect(urlOrigin)

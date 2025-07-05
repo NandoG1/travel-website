@@ -70,8 +70,6 @@ function HotelsDetails({ params }: { params: Promise<{ id: string }> }) {
                                         src={imageUrl} 
                                         fill
                                         sizes="(max-width: 768px) 100vw, 50vw"
-                                        placeholder='blur'
-                                        blurDataURL={listing.blurredImage}
                                         alt={`View of ${listing.name} #${index + 1}`} 
                                         className='object-cover'
                                     />
@@ -141,13 +139,6 @@ function HotelsDetails({ params }: { params: Promise<{ id: string }> }) {
                              {listing.desc}
                          </p>
 
-                         <div className="flex flex-wrap gap-3">
-                             {/* Example of how to display the tags */}
-                             <span className="bg-pink-100 text-pink-800 text-sm font-medium px-4 py-2 rounded-full">skateladus</span>
-                             <span className="bg-pink-100 text-pink-800 text-sm font-medium px-4 py-2 rounded-full">Noklt lindhg</span>
-                             <span className="bg-pink-100 text-pink-800 text-sm font-medium px-4 py-2 rounded-full">Insleads</span>
-                             <span className="bg-pink-100 text-pink-800 text-sm font-medium px-4 py-2 rounded-full">Nuais I uoamis</span>
-                         </div>
                      </div>
                  </div>
 

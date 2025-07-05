@@ -40,7 +40,7 @@ function Navbar() {
     <div className={`fixed z-50 h-16 w-full top-0 left-0 transition-all duration-300 ${
         isScrolled 
             ? "bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-100" 
-            : "bg-transparent"
+            : "bg-black"
     }`}>
         <div className='h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between'>
             
